@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { tokenContext } from '../App'
+import { dataContext } from '../App'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
+import Loading from './Loading'
 
 
 const Login = () => {
-    const [loginToggle, setLoginToggle] = useState(!false)
-    const { setToken, api, user } = useContext(tokenContext)
+    const [loginToggle, setLoginToggle] = useState(false)
+    const { setToken, api, user, loading } = useContext(dataContext)
     const [fullName, setFullName] = useState("")
     const [email, setEmail] = useState("")
     const [otp, setOtp] = useState("")
@@ -46,6 +47,7 @@ const Login = () => {
                 setSubmitBtn(false)
                 setEmail("")
                 setFullName("")
+
             }
         } catch (error) {
             console.error(error);
@@ -54,13 +56,11 @@ const Login = () => {
         }
     }
 
-
     useEffect(() => {
         if (loginToggle) {
             inputFocus.current.focus()
         }
     }, [loginToggle])
-
 
     useEffect(() => {
         if (user.role === "user") {
@@ -68,9 +68,13 @@ const Login = () => {
         }
     }, [user])
 
+    if (loading) {
+        return (<Loading />)
+    }
+
     return (
         <>
-            <ToastContainer position='top-center' theme='dark' />
+         <ToastContainer position='top-center' theme='dark' />
             <div className='flex justify-center items-center w-screen h-screen'>
 
                 {
@@ -239,6 +243,8 @@ const Login = () => {
 
 
             </div>
+
+
 
         </>
     )
