@@ -5,7 +5,7 @@ import { toast, ToastContainer } from 'react-toastify'
 
 
 const Login = () => {
-    const [loginToggle, setLoginToggle] = useState(false)
+    const [loginToggle, setLoginToggle] = useState(!false)
     const { setToken, api, user } = useContext(tokenContext)
     const [fullName, setFullName] = useState("")
     const [email, setEmail] = useState("")
@@ -44,6 +44,8 @@ const Login = () => {
                 localStorage.setItem("token", JSON.stringify(response.data.token))
                 setToken(response.data.token)
                 setSubmitBtn(false)
+                setEmail("")
+                setFullName("")
             }
         } catch (error) {
             console.error(error);
@@ -121,7 +123,7 @@ const Login = () => {
                                         <button
                                             disabled={submitBtn && "true"}
                                             type="submit"
-                                            className={`${submitBtn ? "bg-gray-500 cursor-auto" : "bg-indigo-600 hover:bg-indigo-500"} flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-md/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                                            className={`${submitBtn ? "bg-gray-500 cursor-auto" : "bg-indigo-600 hover:bg-indigo-500"} flex w-full justify-center rounded-md  px-3 py-1.5 text-md/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                                         >
                                             {submitBtn ? "Submitting..." : "Submit"}
                                         </button>

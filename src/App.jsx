@@ -39,7 +39,6 @@ function App() {
           }
         })
         if (response) {
-          console.log(response.data);
           setUser(response.data.singleUser)
         }
       } catch (error) {
@@ -53,10 +52,10 @@ function App() {
   return (
     <>
       <tokenContext.Provider value={{ token, setToken, api, user, setUser }}>
-        {user?.role === "admin" && (<Navbar />)}
+        {user.role === "admin" && (<Navbar />)}
         <Routes>
-          <Route path={user?.role === "admin" ? "/login" : "/"} element={<Login />} />
-          {user?.role === "admin" && (<>
+          <Route path={user.role === "admin" ? "/login" : "/"} element={<Login />} />
+          {user.role === "admin" && (<>
             <Route path="/" element={<Orders />} />
             <Route path="/products" element={<Products />} />
             <Route path="/admin" element={<Admin />} />
