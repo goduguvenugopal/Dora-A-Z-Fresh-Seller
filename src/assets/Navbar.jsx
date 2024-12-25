@@ -77,10 +77,10 @@ const Navbar = () => {
             className="text-white cursor-pointer rounded-full"
           />
           {toggle && (
-            <div onClick={(e) => e.stopPropagation()} className="absolute right-0 top-[2rem] w-[6rem] bg-blue-500 rounded p-2">
-              <h5 className="text-white hover:text-black cursor-pointer">{user.fullName.substring(0, 9)}</h5>
+            <div onClick={(e) => e.stopPropagation()} className="absolute right-0 top-[2rem] w-[6rem] bg-gray-600 rounded p-1">
+              <h5 className="text-white hover:bg-blue-500 cursor-pointer p-1 rounded capitalize">{user.fullName.substring(0, 9)}</h5>
 
-              <h5 className="text-white hover:text-black cursor-pointer" onClick={removeToken}>Log Out</h5>
+              <h5 className="text-white hover:bg-blue-500 rounded  cursor-pointer p-1" onClick={removeToken}>Log Out</h5>
             </div>
           )}
         </div>
@@ -88,16 +88,16 @@ const Navbar = () => {
 
       {/* offcanvas  */}
 
-      <div className={`fixed z-50 top-0 left-0  h-screen w-screen p-3 transform transition-transform duration-300 ${offcanvas ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className='bg-gray-700 relative flex flex-col gap-3 text-white p-5 md:text-center h-full w-full rounded-lg'>
-          <Link onClick={() => setOffcanvas(false)} to="/" className='text-[1.1rem]'>Orders</Link>
-          <Link onClick={() => setOffcanvas(false)} to="/products" className='text-[1.1rem]'>Products</Link>
-          <Link onClick={() => setOffcanvas(false)} to="/uploadproducts" className='text-[1.1rem]'>Upload Products</Link>
-          <Link onClick={() => setOffcanvas(false)} to="/carousel" className='text-[1.1rem]'>Add Carousel</Link>
-          <Link onClick={() => setOffcanvas(false)} to="/addcategory" className='text-[1.1rem]'>Add New Category</Link>
-          <Link onClick={() => setOffcanvas(false)} to="/subscription" className='text-[1.1rem]'>Subscriptions</Link>
-          <Link onClick={() => setOffcanvas(false)} to="/admin" className='text-[1.1rem]'>Admin</Link>
-          <a href='Dora A-Z Fresh Seller.apk' download="Dora A-Z Fresh Seller.apk" className='text-[1.1rem] absolute left-5 bottom-5 h-10 bg-blue-600 flex justify-center items-center gap-2 rounded-full w-fit hover:bg-blue-800 px-5'><FaDownload />  Download App</a>
+      <div className={`fixed z-50 top-0 left-0  h-screen w-screen p-2 transform transition-transform duration-300 ${offcanvas ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className='bg-gray-700 relative flex flex-col gap-4 text-white p-5 md:text-center h-full w-full rounded-lg'>
+          <Link onClick={() => setOffcanvas(false)} to="/" className='text-[1.2rem]'>Orders</Link>
+          <Link onClick={() => setOffcanvas(false)} to="/subscription" className='text-[1.2rem]'>Subscriptions</Link>
+          <Link onClick={() => setOffcanvas(false)} to="/products" className='text-[1.2rem]'>Update Products</Link>
+          <Link onClick={() => setOffcanvas(false)} to="/uploadproducts" className='text-[1.2rem]'>Add Products</Link>
+          <Link onClick={() => setOffcanvas(false)} to="/carousel" className='text-[1.2rem]'>Add Offer Images</Link>
+          <Link onClick={() => setOffcanvas(false)} to="/addcategory" className='text-[1.2rem]'>Add New Category</Link>
+          <Link onClick={() => setOffcanvas(false)} to="/admin" className='text-[1.2rem]'>Admin</Link>
+          <a href='Dora A-Z Fresh Seller.apk' download="Dora A-Z Fresh Seller.apk" className='text-[1.2rem] absolute left-5 bottom-5 h-10 bg-blue-600 flex justify-center items-center gap-2 rounded-full w-fit hover:bg-blue-800 px-5'><FaDownload />  Download App</a>
 
           <MdClose size={25} className='absolute right-5 cursor-pointer' onClick={() => setOffcanvas(false)} />
         </div>

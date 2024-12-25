@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { dataContext } from '../App'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
-import Loading from './Loading'
+import {Loading} from './Loading'
 
 
 const Login = () => {
@@ -74,7 +74,7 @@ const Login = () => {
 
     return (
         <>
-         <ToastContainer position='top-center' theme='dark' />
+            <ToastContainer position='top-center' theme='dark' />
             <div className='flex justify-center items-center w-screen h-screen'>
 
                 {
@@ -125,9 +125,9 @@ const Login = () => {
                                     <div>
 
                                         <button
-                                            disabled={submitBtn && "true"}
+                                            disabled={submitBtn ? true : false}
                                             type="submit"
-                                            className={`${submitBtn ? "bg-gray-500 cursor-auto" : "bg-indigo-600 hover:bg-indigo-500"} flex w-full justify-center rounded-md  px-3 py-1.5 text-md/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                                            className={`${submitBtn ? "bg-gray-500 cursor-auto" : "bg-indigo-600 hover:bg-indigo-500"} flex w-full justify-center rounded-md  px-3 py-1.5 text-md/6 font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                                         >
                                             {submitBtn ? "Submitting..." : "Submit"}
                                         </button>
