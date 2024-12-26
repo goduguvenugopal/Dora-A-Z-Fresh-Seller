@@ -1,29 +1,29 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { dataContext } from '../App'
 import cloudinaryFunc from './coudinary'
+import { MdClose } from 'react-icons/md'
+import { Loading, SmallLoading } from './Loading'
+import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify'
+import { FaEdit } from 'react-icons/fa'
+import { RiDeleteBin6Line } from 'react-icons/ri'
 
 
 const AddCategory = () => {
   const { api } = useContext(dataContext)
   const [imgLoader, setImgLoader] = useState(false)
   const initialProductData = {
-    itemName: "",
-    itemDescription: "",
-    itemCost: "",
-    itemHalfKgCost: "",
-    itemKgCost: "",
-    itemImage: [],
-    itemQty: "1",
-    minOrderQty: "",
-    itemWeight: [],
-    itemStock: "",
-    itemCategory: "",
-    offerCost: "",
-    productTags: [],
+    productCategoryName: "",
+    productImage: "",
+    available: ""
   }
   const [productData, setProductData] = useState(initialProductData)
   const [addBtnSpinner, setAddBtnSpinner] = useState(false)
   const [btnToggle, setBtnToggle] = useState(true)
+  const [categoryData, setCategoryData] = useState([])
+  const [updateId, setUpdateId] = useState("")
+  const [available, setAvailable] = useState("")
+  const [spin, setSpin] = useState(false)
 
 
   // sending file to cloudinary function
@@ -33,7 +33,7 @@ const AddCategory = () => {
       const imageUrl = await cloudinaryFunc(file)
       if (imageUrl) {
         setProductData((prevData) => ({
-          ...prevData, itemImage: [...prevData.itemImage, imageUrl]
+          ...prevData, productImage: imageUrl
         }))
         setImgLoader(false)
 
@@ -47,11 +47,10 @@ const AddCategory = () => {
 
 
   // remove product images function 
-  const removeImageFunction = (itemImg) => {
-    const remainImages = productData.itemImage.filter((item) => item !== itemImg)
-    setProductData((prevData) => ({
-      ...prevData, itemImage: remainImages
-    }))
+  const removeImageFunction = () => {
+    setProductData({
+      productImage: ""
+    })
   }
 
   //product form Handle function 
@@ -62,14 +61,100 @@ const AddCategory = () => {
     }))
   }
 
+
+  // form Submit function 
+  const formSubmitFunc = async (event) => {
+    event.preventDefault()
+    setAddBtnSpinner(true)
+    try {
+      const res = await axios.post(`${api}/category/save-category-products`, productData)
+      if (res) {
+        toast.success("New product category added successfully")
+        setAddBtnSpinner(false)
+        setProductData(initialProductData)
+      }
+    } catch (error) {
+      console.error(error);
+      toast.success("Not added try again ")
+      setAddBtnSpinner(false)
+    }
+  }
+
+
+  // updating category availability 
+  const updateCategoryFunc = async (selectedData) => {
+    if (!available) {
+      toast.error("Please select the options")
+    } else {
+      try {
+        setSpin(true)
+        const res = await axios.put(`${api}/category/update-category-products/${updateId}`, selectedData)
+        if (res) {
+          toast.success("Updated sucessfully")
+          setUpdateId("")
+          setSpin(false)
+
+        }
+      } catch (error) {
+        console.error(error);
+        toast.success("Please try again not updated ")
+        setSpin(false)
+
+      }
+
+    }
+  }
+
+  useEffect(() => {
+    // fecthing category products data 
+    const fetchCategoryData = async () => {
+      try {
+        const res = await axios.get(`${api}/category/get-category-products`)
+        if (res) {
+
+          setCategoryData(res.data.retrievedProducts)
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (!btnToggle) {
+      fetchCategoryData()
+    }
+
+  }, [btnToggle, updateId])
+
+
+  // delete category products 
+  const deleteCategoryFunc = async (categoryId) => {
+    const isOkay = confirm("Category will be deleted permanently, are you sure ?")
+    if (isOkay) {
+      try {
+        const res = await axios.delete(`${api}/category/delete-category-products/${categoryId}`)
+        if (res) {
+          toast.success("Category product deletd successfully")
+          const remainCategories = categoryData.filter((item) => item._id !== categoryId)
+          setCategoryData(remainCategories)
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Category product not deletd try again")
+
+      }
+    }
+  }
+
+
+
+
   return (
     <>
-
-      <div className='mt-[6.1rem] p-3 lg:p-5'>
+      <ToastContainer position='top-center' theme='dark' />
+      <div className='mt-[6.1rem] p-3 lg:p-5 pb-9'>
         <h5 className='text-center text-[1.2rem] font-serif font-semibold'>
-          Add new Category
+          Add New Category
         </h5>
-        <hr className='border border-gray-400 mb-5' />
+        <hr className='border  border-gray-200 mb-5' />
 
         <div className='flex justify-around pb-3'>
           <h5 onClick={() => setBtnToggle(true)} className={`cursor-pointer font-semibold select-none ${btnToggle ? "border-b-[3px] w-16 text-center border-b-blue-700 py-1" : "py-1 border-b-[3px] w-16 text-center border-b-white"}`}>
@@ -77,14 +162,14 @@ const AddCategory = () => {
           </h5>
           <h5 onClick={() => setBtnToggle(false)} className={`cursor-pointer font-semibold select-none ${!btnToggle ? "border-b-[3px] w-16 text-center border-b-green-600 py-1" : "py-1 border-b-[3px] w-16 text-center border-b-white"}`}>Update</h5>
         </div>
-        <hr className='border border-gray-200 mb-5' />
+        <hr className='border border-dashed border-gray-400 mb-5' />
 
         {/* conditional rendering sections  */}
         {btnToggle ? <>
 
 
           {/* form section  */}
-          <form className='lg:flex lg:justify-between lg:gap-3 pt-5 '  >
+          <form className='lg:flex lg:justify-between lg:gap-3' onSubmit={formSubmitFunc}>
             <div className=" lg:w-[40vw]">
               <label
                 htmlFor="cover-photo"
@@ -121,6 +206,7 @@ const AddCategory = () => {
                         name="itemImage"
                         type="file"
                         required
+
                         onChange={fileHandleFunc}
                         className="sr-only"
                       />
@@ -130,84 +216,112 @@ const AddCategory = () => {
 
                 </div>
               </div>
-              <div className='flex flex-wrap gap-2 mt-4'>
-                {productData.itemImage.map((item, index) => (
-                  <div key={index} className='w-[6.5rem] lg:w-[9.5rem]  relative h-fit rounded'>
-                    <img src={item} className='rounded' alt="item-image" />
-                    <MdClose onClick={() => removeImageFunction(item)} className='rounded-full cursor-pointer h-6 w-6 p-1 absolute top-1 hover:bg-indigo-700 right-1 bg-black text-white' />
+              {productData.productImage && (
+
+                <div className='flex flex-wrap gap-2 mt-4'>
+
+                  <div className='w-[6.5rem] lg:w-[9.5rem]  relative h-fit rounded'>
+                    <img src={productData.productImage} className='rounded' alt="item-image" />
+                    <MdClose onClick={removeImageFunction} className='rounded-full cursor-pointer h-6 w-6 p-1 absolute top-1 hover:bg-indigo-700 right-1 bg-black text-white' />
                   </div>
-                ))}
-              </div>
+
+                </div>
+
+              )}
             </div>
 
 
             <div className="space-y-12 lg:w-[50vw]">
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6">
-                <div className="sm:col-span-4">
-                  <label
-                    htmlFor="itemName"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Item Name <span className='text-red-500'>*</span>
-                  </label>
-                  <div className="mt-2">
-                    <div className="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1  outline-gray-500 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-
-                      <input
-                        type="text"
-                        name="itemName"
-                        id="itemName"
-                        required
-                        value={productData.itemName}
-                        onChange={formHandleFunc}
-                        className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
-                        placeholder="Enter Product name"
-                      />
-                    </div>
-
-                  </div>
-
-                </div>
 
                 <div className="sm:col-span-4">
                   <label
-                    htmlFor="itemCost"
+                    htmlFor="productCategoryName"
                     className="block text-sm/6 font-medium text-gray-900"
                   >
-                    Item Cost <span className='text-red-500'>*</span>
+                    Product Category Name <span className='text-red-500'>*</span>
                   </label>
-                  <div className="mt-2">
-                    <div className="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1  outline-gray-500 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-
-                      <input
-                        type="text"
-                        name="itemCost"
-                        onChange={formHandleFunc}
-                        value={productData.itemCost}
-                        required
-                        id="itemCost"
-                        className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
-                        placeholder="Enter Product Cost"
+                  <div className="mt-2 grid grid-cols-1">
+                    <select
+                      value={productData.productCategoryName}
+                      onChange={formHandleFunc}
+                      required
+                      name="productCategoryName"
+                      id="productCategoryName"
+                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1  outline-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    >
+                      <option disabled value="">Select the options</option>
+                      <option value="milk">Milk</option>
+                      <option value="vegetables">Vegetables</option>
+                      <option value="food">Food</option>
+                    </select>
+                    <svg
+                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      data-slot="icon"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+                        clipRule="evenodd"
                       />
-                    </div>
-
+                    </svg>
                   </div>
-
                 </div>
+
+
+                <div className="sm:col-span-4">
+                  <label
+                    htmlFor="itemWeight"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Select the Product availability <span className='text-red-500'>*</span>
+                  </label>
+                  <div className="mt-2 grid grid-cols-1">
+                    <select
+                      required
+                      onChange={formHandleFunc}
+                      id="available"
+                      value={productData.available}
+                      name="available"
+                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1  outline-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    >
+                      <option disabled value="">Select the options</option>
+                      <option value="no">Not Available</option>
+                      <option value="yes">Available</option>
+                    </select>
+                    <svg
+                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      data-slot="icon"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
                 <div className="sm:col-span-4 mt-6 flex items-center justify-center gap-x-6">
                   {addBtnSpinner ? <button
                     disabled={true}
                     type='button'
                     className="flex cursor-not-allowed items-center justify-center gap-3 rounded-md bg-blue-600 px-3 py-2 w-full md:w-fit lg:w-full text-sm font-semibold text-white shadow-sm "
                   >
-                    <SmallLoading /> Adding products...
+                    <SmallLoading /> Adding New Category...
                   </button> :
                     <button
                       type='submit'
                       className="rounded-md bg-indigo-600 px-3 py-2 w-full md:w-fit lg:w-full text-md font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                      Add Products
+                      Add New Category
                     </button>
                   }
 
@@ -216,11 +330,57 @@ const AddCategory = () => {
             </div>
           </form>
 
-        </> : <>
+        </> :
+          <>
 
 
+            {categoryData.length <= 0 ?
+              <Loading />
+              :
+              <div>
+                {categoryData.map((item) => (
+                  <div className='flex border relative items-start gap-3 mb-3 shadow-md rounded shadow-gray-300 p-2' key={item._id}>
+                    <img className='w-[6rem] rounded lg:w-[9rem]' src={item.productImage} alt="image" />
+                    <div>
+                      <h5>Category :  <span className='font-semibold capitalize'>{item.productCategoryName}</span></h5>
+                      <h6>Available : <span className='font-semibold capitalize'>{item.available}</span></h6>
+                    </div>
+                    <FaEdit onClick={() => setUpdateId(item._id)} size={20} className='text-blue-600 hover:text-green-600 cursor-pointer absolute right-3' />
+                    <RiDeleteBin6Line onClick={() => deleteCategoryFunc(item._id)} size={20} className='hover:text-red-600 cursor-pointer absolute right-3 top-11 text-gray-600' />
 
-        </>}
+                  </div>
+                ))
+                }
+
+                {/* category update modal  */}
+                {updateId && (
+
+                  <div className='fixed  top-0 left-0 bg-gray-700 bg-opacity-75 flex h-screen w-screen items-center justify-center p-10'>
+                    <div className='bg-white p-3 rounded w-[300px] '>
+                      <h5 className='text-[1.1rem] font-semibold'>Select the category options</h5>
+                      <select onChange={(e) => setAvailable(e.target.value)} value={available} className='border-2 border-blue-600 mt-3 rounded w-full h-10'>
+                        <option disabled value="">Select the options</option>
+                        <option value="no">Not Available</option>
+                        <option value="yes">Available</option>
+                      </select>
+                      {spin ?
+                        <button className='bg-black mt-5 w-full text-white rounded p-2 flex items-center gap-2 justify-center'><SmallLoading /> Updating...</button>
+                        :
+                        <button onClick={() => updateCategoryFunc({ available: available })} className='bg-black mt-5 w-full text-white rounded hover:bg-blue-500 p-2'>Update</button>
+                      }
+
+                      <button onClick={() => setUpdateId("")} className='bg-red-600 mt-3 w-full text-white rounded hover:bg-red-700 p-2'>Close</button>
+                    </div>
+                  </div>
+
+                )}
+
+              </div>
+
+            }
+
+
+          </>}
 
 
       </div>
