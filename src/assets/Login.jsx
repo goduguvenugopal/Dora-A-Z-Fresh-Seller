@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { dataContext } from '../App'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
-import {Loading} from './Loading'
+import { Loading } from './Loading'
 
 
 const Login = () => {
@@ -180,6 +180,7 @@ const Login = () => {
                                             <div className="mt-2">
                                                 <input
 
+                                                    maxLength="9"
                                                     value={fullName}
                                                     onChange={(e) => setFullName(e.target.value)}
                                                     type="text"
