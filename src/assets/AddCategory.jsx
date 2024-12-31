@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { dataContext } from '../App'
 import cloudinaryFunc from './coudinary'
 import { MdClose } from 'react-icons/md'
-import { Loading, SmallLoading } from './Loading'
+import { CustomLoading, SmallLoading } from './Loading'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import { FaEdit } from 'react-icons/fa'
@@ -335,7 +335,7 @@ const AddCategory = () => {
 
 
             {categoryData.length <= 0 ?
-              <Loading />
+              <CustomLoading customHeight="h-[50vh]" />
               :
               <div>
                 {categoryData.map((item) => (
