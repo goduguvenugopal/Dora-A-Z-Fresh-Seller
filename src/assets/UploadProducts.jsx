@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import cloudinaryFunc from './coudinary';
 import { MdClose } from 'react-icons/md';
 import { Loading, SmallLoading } from '../assets/Loading'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { dataContext } from '../App'
-
+import { milkBasedItems, foodBasedNames, vegetables } from './itemSubCategory';
 
 
 
@@ -25,11 +25,28 @@ const UploadProducts = () => {
     itemWeight: [],
     itemStock: "",
     itemCategory: "",
+    itemSubCategory: "",
     offerCost: "",
     productTags: [],
   }
+
+
   const [productData, setProductData] = useState(initialProductData)
   const [addBtnSpinner, setAddBtnSpinner] = useState(false)
+  const [itemSubCategory, setItemSubCategory] = useState([])
+
+
+// displaying sub category names with conditions 
+  useEffect(() => {
+    if (productData.itemCategory === "milk") {
+      setItemSubCategory(milkBasedItems)
+    } else if (productData.itemCategory === "vegetables") {
+      setItemSubCategory(vegetables)
+
+    } else if (productData.itemCategory === "food") {
+      setItemSubCategory(foodBasedNames)
+    }
+  }, [productData.itemCategory])
 
 
   // Add tags into the productTags array
@@ -132,6 +149,7 @@ const UploadProducts = () => {
       }
     }
   }
+
 
 
   return (
@@ -400,6 +418,46 @@ const UploadProducts = () => {
                   </div>
                 </div>
 
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="itemSubCategory"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Item Sub Category <span className='text-red-500'>*</span>
+                  </label>
+                  <div className="mt-2 grid grid-cols-1">
+                    <select
+                      id="itemSubCategory"
+                      name="itemSubCategory"
+                      autoComplete="itemSubCategory"
+                      required
+                      value={productData.itemSubCategory}
+                      onChange={formHandleFunc}
+                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1  outline-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    >
+                      <option disabled value="">Select the Sub Category</option>
+
+                      {itemSubCategory.map((item, index) => (
+
+                        <option key={index} value={item}>{item}</option>
+                      ))}
+
+                    </select>
+                    <svg
+                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      data-slot="icon"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
                 <div className="sm:col-span-3">
                   <label
                     htmlFor="minOrderQty"
