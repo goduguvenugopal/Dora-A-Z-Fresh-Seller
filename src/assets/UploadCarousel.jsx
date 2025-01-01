@@ -20,11 +20,90 @@ const UploadCarousel = () => {
   const [productData, setProductData] = useState(initialProductData)
   const [addBtnSpinner, setAddBtnSpinner] = useState(false)
   const [btnToggle, setBtnToggle] = useState(true)
-  const [carouselData, setcarouselData] = useState([])
+  const [carouselData, setCarouselData] = useState([])
   const [updateId, setUpdateId] = useState("")
   const [available, setAvailable] = useState("")
   const [spin, setSpin] = useState(false)
   const [getCarSpin, setGetCarSpin] = useState(false)
+  const [updateCarouselData, setUpdateCarouselData] = useState([])
+  const initialUpdateData = {
+    offerTitle: "",
+    carouselImage: [],
+  }
+  const [updateData, setUpdateData] = useState(initialUpdateData)
+
+  const sendUpdatedData = {
+    offerTitle: updateData.offerTitle === "" ? carouselData[0]?.offerTitle : updateData.offerTitle,
+    carouselImage: updateData.carouselImage.length > 0 ? updateData.carouselImage : updateCarouselData[0]?.carouselImage,
+  };
+
+
+
+
+  useEffect(() => {
+    // fecthing carousel images data 
+    const fetchcarouselData = async () => {
+      setGetCarSpin(true)
+      try {
+        const res = await axios.get(`${api}/carousel/get-carousel`)
+        if (res) {
+          setGetCarSpin(false)
+          setCarouselData(res.data.retrievedCarousel)
+          setUpdateCarouselData(res.data.retrievedCarousel)
+
+        }
+      } catch (error) {
+        console.error(error);
+        setGetCarSpin(false)
+
+      }
+    }
+    if (!btnToggle) {
+      fetchcarouselData()
+    }
+
+  }, [btnToggle, updateId])
+
+
+  //  removing existed offer images 
+  const removeExistedImageFunc = (itemId) => {
+    setUpdateCarouselData((prevData) => {
+      const updatedDat = [...prevData];
+      if (updatedDat[0]?.carouselImage) {
+        updatedDat[0].carouselImage = updatedDat[0].carouselImage.filter((item) => item !== itemId);
+      }
+      return updatedDat;
+    });
+  };
+
+
+  // update form handle function 
+  const updateHandleFunc = (event) => {
+    const { name, value } = event.target
+    setUpdateData((prevData) => ({
+      ...prevData, [name]: value
+    }))
+  }
+
+
+  // sending file to cloudinary function
+  const updateFileHandleFunc = async (file) => {
+    try {
+      setImgLoader(true)
+      const imageUrl = await cloudinaryFunc(file)
+      if (imageUrl) {
+        setUpdateData((prevData) => ({
+          ...prevData, carouselImage: [...updateData.carouselImage, imageUrl]
+        }))
+        setImgLoader(false)
+
+      }
+    } catch (error) {
+      console.log(error);
+      setImgLoader(false)
+
+    }
+  }
 
 
   // sending file to cloudinary function
@@ -79,19 +158,21 @@ const UploadCarousel = () => {
 
     } catch (error) {
       console.error(error);
-      toast.error("Not added try again ")
-      setAddBtnSpinner(false)
       if (error?.response?.status === 401) {
-        toast.error("Carousel already added, before adding new carousel delete old carousel")
+        toast.error("Offer images already added, before adding new Offer images delete old Offer images")
+        setAddBtnSpinner(false)
+      } else {
+        toast.error("Not added try again ")
         setAddBtnSpinner(false)
       }
 
     }
+
   }
 
 
   // updating category availability 
-  const updateCategoryFunc = async (selectedData) => {
+  const updateCarouselFunc = async (selectedData) => {
     if (!available) {
       toast.error("Please select the options")
     } else {
@@ -116,43 +197,23 @@ const UploadCarousel = () => {
 
 
 
-  useEffect(() => {
-    // fecthing carousel images data 
-    const fetchcarouselData = async () => {
-      setGetCarSpin(true)
-      try {
-        const res = await axios.get(`${api}/carousel/get-carousel`)
-        if (res) {
-          setGetCarSpin(false)
-          setcarouselData(res.data.retrievedCarousel)
-        }
-      } catch (error) {
-        console.error(error);
-        setGetCarSpin(false)
 
-      }
-    }
-    if (!btnToggle) {
-      fetchcarouselData()
-    }
-
-  }, [btnToggle, updateId])
 
 
   // delete carousel  
   const deleteCarouselFunc = async (carouselId) => {
-    const isOkay = confirm("Carousel will be deleted permanently, are you sure ?")
+    const isOkay = confirm("Offer images and title will be deleted permanently, are you sure ?")
     if (isOkay) {
       try {
         const res = await axios.delete(`${api}/carousel/delete-carousel/${carouselId}`)
         if (res) {
-          toast.success("Carousel deletd successfully")
+          toast.success("offer & title images deletd successfully")
           const remainCategories = carouselData.filter((item) => item._id !== carouselId)
-          setcarouselData(remainCategories)
+          setCarouselData(remainCategories)
         }
       } catch (error) {
         console.error(error);
-        toast.error("Carousel not deletd try again")
+        toast.error("offer images not deletd try again")
 
       }
     }
@@ -183,13 +244,13 @@ const UploadCarousel = () => {
 
 
           {/* form section  */}
-          <form className='lg:flex lg:justify-between lg:gap-3' onSubmit={formSubmitFunc}>
+          <div className='lg:flex lg:justify-between lg:gap-3' >
             <div className=" lg:w-[40vw]">
               <label
                 htmlFor="cover-photo"
                 className="block text-sm/6 font-medium text-gray-900"
               >
-                Offer images <span className='text-red-500'>*</span>
+                Offer images
               </label>
               <div className="mt-2 flex justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10">
                 <div className="text-center">
@@ -280,79 +341,177 @@ const UploadCarousel = () => {
                     type='button'
                     className="flex cursor-not-allowed items-center justify-center gap-3 rounded-md bg-blue-600 px-3 py-2 w-full md:w-fit lg:w-full text-sm font-semibold text-white shadow-sm "
                   >
-                    <SmallLoading /> Adding New Carousel...
+                    <SmallLoading /> Adding Offer Images...
                   </button> :
                     <button
-                      type='submit'
-                      className="rounded-md bg-indigo-600 px-3 py-2 w-full md:w-fit lg:w-full text-md font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      onClick={formSubmitFunc}
+                      className={`rounded-md bg-indigo-600 px-3 py-2 w-full md:w-fit lg:w-full text-md font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${productData.offerTitle || productData.carouselImage.length > 0 ? "block" : "hidden"}`}
                     >
-                      Add New Carousel
+                      Add Offer Images
                     </button>
                   }
 
                 </div>
               </div>
             </div>
-          </form>
+          </div>
 
         </> :
           <>
-            {getCarSpin ? <CustomLoading customHeight="h-[50vh]" /> : <>
+            {getCarSpin ?
+              <CustomLoading customHeight="h-[50vh]" />
+              : <>
 
-              {carouselData.length <= 0 ?
-                <div className="flex justify-center items-center h-[50vh]">
-                  <h5 className='font-semibold'>No offer images and tilte</h5>
-                </div>
+                {carouselData.length <= 0 ?
+                  <div className="flex justify-center items-center h-[50vh]">
+                    <h5 className='font-semibold'>No offer images and tilte</h5>
+                  </div>
+                  :
+                  <div>
+                    {carouselData.map((item) => (
+                      <div className='font-semibold flex flex-col border relative items-start gap-3 mb-3 p-3 rounded' key={item._id}>
+                        <div className='flex flex-wrap w-full gap-3' >
+                          {item.carouselImage.map((itemImg, index) => (
+                            <div key={index}>
+                              <img className='w-[6rem] rounded lg:w-[9rem]' src={itemImg} alt="carousel-image" />
+                            </div>
+                          ))}
+                        </div>
 
-                :
-                <div>
-                  {carouselData.map((item) => (
-                    <div className='font-semibold flex flex-col border relative items-start gap-3 mb-3 shadow-md rounded shadow-gray-300 p-2' key={item._id}>
-                      <div className='flex flex-wrap w-full gap-3' >
-                        {item.carouselImage.map((itemImg, index) => (
-                          <div key={index}>
-                            <img className='w-[6rem] rounded lg:w-[9rem]' src={itemImg} alt="carousel-image" />
+
+                        <span className='mt-2 pr-3'>Offer Title  : <span className='text-blue-700'>{item.offerTitle}</span></span>
+                        <FaEdit onClick={() => setUpdateId(item._id)} size={20} className='text-blue-600 hover:text-green-600 cursor-pointer absolute right-3' />
+                        <RiDeleteBin6Line onClick={() => deleteCarouselFunc(item._id)} size={20} className='hover:text-red-600 cursor-pointer absolute right-3 top-11 text-gray-600' />
+
+
+
+                      </div>
+                    ))
+                    }
+
+                    {/* carousel update section  */}
+                    {updateId && (
+
+                      <div className=''>
+
+                        <h5 className='text-center font-semibold text-[1.2rem] text-gray-700'>Update Title & Images</h5>
+                        <hr className='border border-dashed border-black mt-2' />
+
+                        <div className="mt-4 flex flex-wrap justify-between items-start gap-2 w-full">
+
+                          <div className="w-full lg:w-[45%]">
+
+                            <div className="">
+                              <label
+                                htmlFor="offerTitle"
+                                className="block text-sm/6 font-medium text-gray-900"
+                              >
+                                Offer Title
+                              </label>
+                              <div className="mt-2">
+                                <textarea
+                                  value={updateData.offerTitle}
+                                  onChange={updateHandleFunc}
+
+                                  name="offerTitle"
+                                  id="offerTitle"
+                                  rows={3}
+                                  placeholder='Write offer title Ex : festival offer 20 % discount on each product'
+                                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1  outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+
+                                />
+                              </div>
+
+                            </div>
+
+
 
                           </div>
-                        ))}
+
+
+                          <div className="w-full lg:w-[45%]">
+                            <label
+                              htmlFor="cover-photo"
+                              className="block text-sm/6 font-medium text-gray-900"
+                            >
+                              Offer images <span className='text-red-500'>*</span>
+                            </label>
+                            <div className="mt-2 flex justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10">
+                              <div className="text-center">
+                                {imgLoader ?
+                                  <div className='flex items-center gap-3 h-[5rem] font-semibold text-gray-700'><SmallLoading /> Uploading...</div>
+                                  : <svg
+                                    className="mx-auto size-20 text-gray-300"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    aria-hidden="true"
+                                    data-slot="icon"
+                                  >
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>}
+
+                                <div className="mt-4 flex text-sm/6 text-gray-600">
+                                  <label
+                                    htmlFor="carouselImage"
+                                    className="relative cursor-pointer text-indigo-500 hover:bg-indigo-600 hover:border-white select-none hover:text-white border-2 border-indigo-500 p-1 rounded-md bg-white font-semibold "
+                                  >
+                                    <span>Upload Offer Images</span>
+                                    <input
+                                      id="carouselImage"
+                                      name="carouselImage"
+                                      type="file"
+                                      onChange={updateFileHandleFunc}
+                                      className="sr-only"
+                                    />
+                                  </label>
+
+                                </div>
+
+                              </div>
+                            </div>
+                            {productData.carouselImage && (
+
+                              <div className='flex flex-wrap gap-2 mt-4'>
+                                {updateCarouselData[0]?.carouselImage?.map((item, index) => (
+                                  <div key={index} className='w-[6.5rem] lg:w-[9.5rem]  relative h-fit rounded'>
+                                    <img src={item} className='rounded' alt="item-image" />
+                                    <MdClose onClick={() => removeExistedImageFunc(item)} className='rounded-full cursor-pointer h-6 w-6 p-1 absolute top-1 hover:bg-indigo-700 right-1 bg-black text-white' />
+                                  </div>
+                                ))}
+
+
+
+                              </div>
+
+                            )}
+                          </div>
+
+                        </div>
+                        <hr className='border mt-2' />
+
+                        <div className='flex flex-wrap items-center pt-5 justify-around gap-2'>
+                          <button onClick={() => setUpdateId("")} className='bg-red-600  order-2 lg:order-1 w-full lg:w-[40%] text-white rounded hover:bg-red-700  h-10'>Close</button>
+
+                          {spin ?
+                            <button className='bg-black order-1 lg:order-2 w-full lg:w-[40%] text-white rounded p-2 flex items-center gap-2 justify-center'><SmallLoading /> Updating...</button>
+                            :
+                            <button onClick={() => updateCarouselFunc({ available: available })} className='bg-black order-1 lg:order-2  w-full lg:w-[40%] text-white rounded hover:bg-blue-500 p-2'>Update</button>
+                          }
+
+                        </div>
                       </div>
 
 
-                      Offer title : <span>{item.offerTitle}</span>
-                      <FaEdit onClick={() => setUpdateId(item._id)} size={20} className='text-blue-600 hover:text-green-600 cursor-pointer absolute right-3' />
-                      <RiDeleteBin6Line onClick={() => deleteCarouselFunc(item._id)} size={20} className='hover:text-red-600 cursor-pointer absolute right-3 top-11 text-gray-600' />
+                    )}
 
-                    </div>
-                  ))
-                  }
+                  </div>
 
-                  {/* category update modal  */}
-                  {updateId && (
-
-                    <div className='fixed  top-0 left-0 bg-gray-700 bg-opacity-75 flex h-screen w-screen items-center justify-center p-10'>
-                      <div className='bg-white p-3 rounded w-[300px] '>
-                        <h5 className='text-[1.1rem] font-semibold'>Select the category options</h5>
-                        <select onChange={(e) => setAvailable(e.target.value)} value={available} className='border-2 border-blue-600 mt-3 rounded w-full h-10'>
-                          <option disabled value="">Select the options</option>
-                          <option value="no">Not Available</option>
-                          <option value="yes">Available</option>
-                        </select>
-                        {spin ?
-                          <button className='bg-black mt-5 w-full text-white rounded p-2 flex items-center gap-2 justify-center'><SmallLoading /> Updating...</button>
-                          :
-                          <button onClick={() => updateCategoryFunc({ available: available })} className='bg-black mt-5 w-full text-white rounded hover:bg-blue-500 p-2'>Update</button>
-                        }
-
-                        <button onClick={() => setUpdateId("")} className='bg-red-600 mt-3 w-full text-white rounded hover:bg-red-700 p-2'>Close</button>
-                      </div>
-                    </div>
-
-                  )}
-
-                </div>
-
-              }
-            </>}
+                }
+              </>}
 
 
 
