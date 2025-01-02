@@ -22,10 +22,10 @@ const UploadCarousel = () => {
   const [btnToggle, setBtnToggle] = useState(true)
   const [carouselData, setCarouselData] = useState([])
   const [updateId, setUpdateId] = useState("")
-  const [available, setAvailable] = useState("")
   const [spin, setSpin] = useState(false)
   const [getCarSpin, setGetCarSpin] = useState(false)
   const [updateCarouselData, setUpdateCarouselData] = useState([])
+  const [concatArray, setConcatArray] = useState([])
   const initialUpdateData = {
     offerTitle: "",
     carouselImage: [],
@@ -34,10 +34,8 @@ const UploadCarousel = () => {
 
   const sendUpdatedData = {
     offerTitle: updateData.offerTitle === "" ? carouselData[0]?.offerTitle : updateData.offerTitle,
-    carouselImage: updateData.carouselImage.length > 0 ? updateData.carouselImage : updateCarouselData[0]?.carouselImage,
+    carouselImage: concatArray,
   };
-
-
 
 
   useEffect(() => {
@@ -49,7 +47,8 @@ const UploadCarousel = () => {
         if (res) {
           setGetCarSpin(false)
           setCarouselData(res.data.retrievedCarousel)
-          setUpdateCarouselData(res.data.retrievedCarousel)
+          setUpdateCarouselData(res.data.retrievedCarousel[0].carouselImage)
+
 
         }
       } catch (error) {
@@ -65,15 +64,19 @@ const UploadCarousel = () => {
   }, [btnToggle, updateId])
 
 
+  // concating two arrays 
+  useEffect(() => {
+    const concatedArray = updateCarouselData.concat(updateData.carouselImage)
+    setConcatArray(concatedArray)
+  }, [updateCarouselData, updateData])
+
+
+
+
   //  removing existed offer images 
   const removeExistedImageFunc = (itemId) => {
-    setUpdateCarouselData((prevData) => {
-      const updatedDat = [...prevData];
-      if (updatedDat[0]?.carouselImage) {
-        updatedDat[0].carouselImage = updatedDat[0].carouselImage.filter((item) => item !== itemId);
-      }
-      return updatedDat;
-    });
+    const remainData = concatArray.filter((item) => item !== itemId)
+    setConcatArray(remainData)
   };
 
 
@@ -84,6 +87,7 @@ const UploadCarousel = () => {
       ...prevData, [name]: value
     }))
   }
+
 
 
   // sending file to cloudinary function
@@ -105,7 +109,6 @@ const UploadCarousel = () => {
     }
   }
 
-
   // sending file to cloudinary function
   const fileHandleFunc = async (file) => {
     try {
@@ -124,7 +127,6 @@ const UploadCarousel = () => {
 
     }
   }
-
 
   // remove product images function 
   const removeImageFunction = (itemImg) => {
@@ -170,35 +172,26 @@ const UploadCarousel = () => {
 
   }
 
-
   // updating category availability 
-  const updateCarouselFunc = async (selectedData) => {
-    if (!available) {
-      toast.error("Please select the options")
-    } else {
-      try {
-        setSpin(true)
-        const res = await axios.put(`${api}/category/update-category-products/${updateId}`, selectedData)
-        if (res) {
-          toast.success("Updated sucessfully")
-          setUpdateId("")
-          setSpin(false)
-
-        }
-      } catch (error) {
-        console.error(error);
-        toast.success("Please try again not updated ")
+  const updateCarouselFunc = async (data) => {
+    try {
+      setSpin(true)
+      const res = await axios.put(`${api}/carousel/update-carousel/${updateId}`, data)
+      if (res) {
+        toast.success("Updated sucessfully")
+        setUpdateId("")
         setSpin(false)
-
+        setUpdateData(initialUpdateData)
       }
+    } catch (error) {
+      console.error(error);
+      toast.success("Please try again not updated ")
+      setSpin(false)
 
     }
+
+
   }
-
-
-
-
-
 
   // delete carousel  
   const deleteCarouselFunc = async (carouselId) => {
@@ -218,9 +211,6 @@ const UploadCarousel = () => {
       }
     }
   }
-
-
-
 
   return (
     <>
@@ -358,6 +348,7 @@ const UploadCarousel = () => {
 
         </> :
           <>
+            {/* update section  */}
             {getCarSpin ?
               <CustomLoading customHeight="h-[50vh]" />
               : <>
@@ -369,7 +360,7 @@ const UploadCarousel = () => {
                   :
                   <div>
                     {carouselData.map((item) => (
-                      <div className='font-semibold flex flex-col border relative items-start gap-3 mb-3 p-3 rounded' key={item._id}>
+                      <div className='font-semibold flex flex-col border  items-start gap-3 mb-3 p-3 rounded' key={item._id}>
                         <div className='flex flex-wrap w-full gap-3' >
                           {item.carouselImage.map((itemImg, index) => (
                             <div key={index}>
@@ -379,10 +370,14 @@ const UploadCarousel = () => {
                         </div>
 
 
-                        <span className='mt-2 pr-3'>Offer Title  : <span className='text-blue-700'>{item.offerTitle}</span></span>
-                        <FaEdit onClick={() => setUpdateId(item._id)} size={20} className='text-blue-600 hover:text-green-600 cursor-pointer absolute right-3' />
-                        <RiDeleteBin6Line onClick={() => deleteCarouselFunc(item._id)} size={20} className='hover:text-red-600 cursor-pointer absolute right-3 top-11 text-gray-600' />
+                        <span className='mt-2 '>Offer Title  : <span className='text-blue-700'>{item.offerTitle}</span></span>
 
+                        <div className='flex justify-end gap-5 mt-3 w-full'>
+
+                          <FaEdit onClick={() => setUpdateId(item._id)} size={20} className='text-blue-600 hover:text-green-600 cursor-pointer ' />
+                          <RiDeleteBin6Line onClick={() => deleteCarouselFunc(item._id)} size={20} className='hover:text-red-600 cursor-pointer   text-gray-600' />
+
+                        </div>
 
 
                       </div>
@@ -434,7 +429,7 @@ const UploadCarousel = () => {
                               htmlFor="cover-photo"
                               className="block text-sm/6 font-medium text-gray-900"
                             >
-                              Offer images <span className='text-red-500'>*</span>
+                              Offer images
                             </label>
                             <div className="mt-2 flex justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10">
                               <div className="text-center">
@@ -476,7 +471,7 @@ const UploadCarousel = () => {
                             {productData.carouselImage && (
 
                               <div className='flex flex-wrap gap-2 mt-4'>
-                                {updateCarouselData[0]?.carouselImage?.map((item, index) => (
+                                {concatArray.map((item, index) => (
                                   <div key={index} className='w-[6.5rem] lg:w-[9.5rem]  relative h-fit rounded'>
                                     <img src={item} className='rounded' alt="item-image" />
                                     <MdClose onClick={() => removeExistedImageFunc(item)} className='rounded-full cursor-pointer h-6 w-6 p-1 absolute top-1 hover:bg-indigo-700 right-1 bg-black text-white' />
@@ -496,10 +491,11 @@ const UploadCarousel = () => {
                         <div className='flex flex-wrap items-center pt-5 justify-around gap-2'>
                           <button onClick={() => setUpdateId("")} className='bg-red-600  order-2 lg:order-1 w-full lg:w-[40%] text-white rounded hover:bg-red-700  h-10'>Close</button>
 
+
                           {spin ?
                             <button className='bg-black order-1 lg:order-2 w-full lg:w-[40%] text-white rounded p-2 flex items-center gap-2 justify-center'><SmallLoading /> Updating...</button>
                             :
-                            <button onClick={() => updateCarouselFunc({ available: available })} className='bg-black order-1 lg:order-2  w-full lg:w-[40%] text-white rounded hover:bg-blue-500 p-2'>Update</button>
+                            <button onClick={() => updateCarouselFunc(sendUpdatedData)} className={`bg-black order-1 lg:order-2  w-full lg:w-[40%] text-white rounded hover:bg-blue-500 p-2 ${updateData.offerTitle || updateData.carouselImage.length > 0 || concatArray.length <= 0 ? "block" : "hidden"}`}>Update</button>
                           }
 
                         </div>
