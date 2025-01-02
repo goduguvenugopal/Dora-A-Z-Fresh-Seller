@@ -333,7 +333,7 @@ const AddCategory = () => {
         </> :
           <>
 
-
+            {/* category update section  */}
             {categoryData.length <= 0 ?
               <CustomLoading customHeight="h-[50vh]" />
               :

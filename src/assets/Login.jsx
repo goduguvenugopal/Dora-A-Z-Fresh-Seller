@@ -140,7 +140,7 @@ const Login = () => {
                                         If you didn’t receive the login code, please check your email or
                                     </span>
                                     <a
-                                        href="mailto:venuiti97@gmail.com"
+                                        href="mailto:dora.a.to.z.fresh@gmail.com"
                                         className="font-semibold text-indigo-600 hover:text-indigo-500"
                                     >
                                         contact us
@@ -230,7 +230,7 @@ const Login = () => {
                                             If you didn’t receive the login code, please check your email or
                                         </span>
                                         <a
-                                            href="mailto:venuiti97@gmail.com"
+                                            href="mailto:dora.a.to.z.fresh@gmail.com"
                                             className="font-semibold text-indigo-600 hover:text-indigo-500"
                                         >
                                             contact us
