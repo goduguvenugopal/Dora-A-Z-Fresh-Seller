@@ -109,7 +109,7 @@ const ProductOverView = () => {
         }
       </>
         :
-        <Outlet context={{ id }} />
+        <Outlet context={{ id , product}} />
       }
 
     </div>
