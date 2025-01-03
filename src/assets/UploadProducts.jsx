@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import cloudinaryFunc from './coudinary';
 import { MdClose } from 'react-icons/md';
 import { Loading, SmallLoading } from '../assets/Loading'
@@ -11,6 +11,7 @@ import { milkBasedItems, foodBasedNames, vegetables } from './itemSubCategory';
 
 const UploadProducts = () => {
   const { api } = useContext(dataContext)
+  const inputFocus = useRef()
   const [imgLoader, setImgLoader] = useState(false)
   const [tags, setTags] = useState("")
   const initialProductData = {
@@ -57,6 +58,7 @@ const UploadProducts = () => {
         productTags: [...prevData.productTags, tags],
       }));
       setTags("")
+      inputFocus.current.focus()
     }
   };
 
@@ -66,6 +68,8 @@ const UploadProducts = () => {
     setProductData((prevData) => ({
       ...prevData, productTags: remainTags
     }))
+    inputFocus.current.focus()
+
   }
 
   // sending file to cloudinary function
@@ -555,6 +559,7 @@ const UploadProducts = () => {
                   <div className="mt-2 relative">
                     <input
                       type="text"
+                      ref={inputFocus}
                       name="productTags"
                       id="productTags"
                       value={tags}

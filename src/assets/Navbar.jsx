@@ -67,7 +67,7 @@ const Navbar = () => {
       <div className={`bg-red-500 w-[100vw] h-[5.2rem] flex justify-around fixed top-0 left-0 items-center transition-transform duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'} z-10`}>
         <FaBars size={25} title='open menu' className="text-white cursor-pointer" onClick={() => setOffcanvas(true)} />
         <div className="w-[7.5rem] md:w-[7.9rem]">
-          <img className="md:w-full rounded-full" src="dora-logo.jpeg" alt="dora-logo" />
+          <img className="md:w-full rounded-full" src="/dora-logo.jpeg" alt="dora-logo" />
         </div>
         <div className="flex flex-wrap items-center gap-2 relative">
           <CgProfile

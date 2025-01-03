@@ -144,17 +144,14 @@ const AddCategory = () => {
     }
   }
 
-
-
-
   return (
     <>
       <ToastContainer position='top-center' theme='dark' />
       <div className='mt-[6.1rem] p-3 lg:p-5 pb-9'>
-        <h5 className='text-center text-[1.2rem] font-serif font-semibold'>
-          Add New Category
+        <h5 className='text-center text-[1.2rem]  font-semibold'>
+          Add Category & Update
         </h5>
-        <hr className='border  border-gray-200 mb-5' />
+        <hr className='border  border-gray-200 mb-2 mt-1' />
 
         <div className='flex justify-around pb-3'>
           <h5 onClick={() => setBtnToggle(true)} className={`cursor-pointer font-semibold select-none ${btnToggle ? "border-b-[3px] w-16 text-center border-b-blue-700 py-1" : "py-1 border-b-[3px] w-16 text-center border-b-white"}`}>
@@ -337,9 +334,9 @@ const AddCategory = () => {
             {categoryData.length <= 0 ?
               <CustomLoading customHeight="h-[50vh]" />
               :
-              <div>
+              <div className='lg:flex lg:justify-center lg:flex-wrap lg:gap-2'>
                 {categoryData.map((item) => (
-                  <div className='flex border relative items-start gap-3 mb-3 shadow-md rounded shadow-gray-300 p-2' key={item._id}>
+                  <div className='flex border relative items-start gap-3 mb-3 shadow-md rounded shadow-gray-300 p-2 lg:w-2/4' key={item._id}>
                     <img className='w-[6rem] rounded lg:w-[9rem]' src={item.productImage} alt="image" />
                     <div>
                       <h5>Category :  <span className='font-semibold capitalize'>{item.productCategoryName}</span></h5>

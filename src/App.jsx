@@ -12,7 +12,10 @@ import AddCategory from './assets/AddCategory.jsx';
 import UploadCarousel from './assets/UploadCarousel.jsx';
 import Subscription from './assets/Subscription.jsx';
 import axios from 'axios';
- 
+import ProductOverView from './assets/ProductOverView.jsx';
+import ProductUpdateForm from './assets/ProductUpdateForm.jsx';
+import PageNotFound from './assets/PageNotFound.jsx';
+
 
 export const dataContext = createContext()
 
@@ -21,19 +24,19 @@ function App() {
   const [token, setToken] = useState("")
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(false)
- 
 
- 
+
+
   useEffect(() => {
     // retrieving token from localstorage 
     const token = localStorage.getItem("token")
     if (token) {
       setToken(JSON.parse(token))
-      
+
     }
   }, [])
 
-  
+
   useEffect(() => {
     // fetching user details 
     const fetchUser = async () => {
@@ -64,15 +67,19 @@ function App() {
         {user.role === "admin" && token && (<Navbar />)}
         <Routes>
 
-
           {user.role === "admin" && token ? (<>
             <Route path="/" element={<Orders />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/products/product_over_view/:id" element={<ProductOverView/>} >
+            <Route path='updateproduct' element={<ProductUpdateForm/>}/>
+            </Route>
             <Route path="/admin" element={<Admin />} />
             <Route path="/uploadproducts" element={<UploadProducts />} />
             <Route path="/addcategory" element={<AddCategory />} />
             <Route path='/carousel' element={<UploadCarousel />} />
             <Route path='/subscription' element={<Subscription />} />
+            <Route path="*" element={<PageNotFound />} />
+
           </>) : <>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />

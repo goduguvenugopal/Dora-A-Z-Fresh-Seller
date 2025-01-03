@@ -216,10 +216,10 @@ const UploadCarousel = () => {
     <>
       <ToastContainer position='top-center' theme='dark' />
       <div className='mt-[6.1rem] p-3 lg:p-5 pb-9'>
-        <h5 className='text-center text-[1.2rem] font-serif font-semibold'>
-          Add Offer Image & Title
+        <h5 className='text-center text-[1.2rem]  font-semibold'>
+          Add Offer Image & Update
         </h5>
-        <hr className='border  border-gray-200 mb-5' />
+        <hr className='border  border-gray-200 mb-4 mt-1' />
 
         <div className='flex justify-around pb-3'>
           <h5 onClick={() => setBtnToggle(true)} className={` hover:border-blue-700 cursor-pointer font-semibold select-none ${btnToggle ? "bg-blue-500 text-white font-semibold rounded-full w-16 text-center border border-blue-500   py-1" : "py-1  text-black font-semibold rounded-full border border-gray-400 w-16 text-center  "}`}>
