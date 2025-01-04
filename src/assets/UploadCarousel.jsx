@@ -24,18 +24,12 @@ const UploadCarousel = () => {
   const [updateId, setUpdateId] = useState("")
   const [spin, setSpin] = useState(false)
   const [getCarSpin, setGetCarSpin] = useState(false)
-  const [updateCarouselData, setUpdateCarouselData] = useState([])
-  const [concatArray, setConcatArray] = useState([])
-  const initialUpdateData = {
+  const [updateCarouselData, setUpdateCarouselData] = useState({})
+  const updateProductData = {
     offerTitle: "",
     carouselImage: [],
   }
-  const [updateData, setUpdateData] = useState(initialUpdateData)
-
-  const sendUpdatedData = {
-    offerTitle: updateData.offerTitle === "" ? carouselData[0]?.offerTitle : updateData.offerTitle,
-    carouselImage: concatArray,
-  };
+  const [updateData, setUpdateData] = useState(updateProductData)
 
 
   useEffect(() => {
@@ -47,8 +41,8 @@ const UploadCarousel = () => {
         if (res) {
           setGetCarSpin(false)
           setCarouselData(res.data.retrievedCarousel)
-          setUpdateCarouselData(res.data.retrievedCarousel[0].carouselImage)
-
+          setUpdateCarouselData(res.data.retrievedCarousel[0])
+          console.log(res.data.retrievedCarousel[0]);
 
         }
       } catch (error) {
@@ -64,19 +58,25 @@ const UploadCarousel = () => {
   }, [btnToggle, updateId])
 
 
-  // concating two arrays 
   useEffect(() => {
-    const concatedArray = updateCarouselData.concat(updateData.carouselImage)
-    setConcatArray(concatedArray)
-  }, [updateCarouselData, updateData])
+    if (Object.keys(updateCarouselData).length > 0) {
+      setUpdateData((prevData) => ({
+        ...prevData,
+        offerTitle: updateCarouselData.offerTitle,
+        carouselImage: updateCarouselData.carouselImage,
+      }))
+    }
 
+  }, [updateCarouselData])
 
 
 
   //  removing existed offer images 
   const removeExistedImageFunc = (itemId) => {
-    const remainData = concatArray.filter((item) => item !== itemId)
-    setConcatArray(remainData)
+    const remainData = updateData.carouselImage.filter((item) => item !== itemId)
+    setUpdateData((prevData) => ({
+      ...prevData, carouselImage: remainData
+    }))
   };
 
 
@@ -173,19 +173,19 @@ const UploadCarousel = () => {
   }
 
   // updating category availability 
-  const updateCarouselFunc = async (data) => {
+  const updateCarouselFunc = async () => {
     try {
       setSpin(true)
-      const res = await axios.put(`${api}/carousel/update-carousel/${updateId}`, data)
+      const res = await axios.put(`${api}/carousel/update-carousel/${updateId}`, updateData)
       if (res) {
         toast.success("Updated sucessfully")
         setUpdateId("")
         setSpin(false)
-        setUpdateData(initialUpdateData)
+        setUpdateData(updateProductData)
       }
     } catch (error) {
       console.error(error);
-      toast.success("Please try again not updated ")
+      toast.error("Please try again not updated ")
       setSpin(false)
 
     }
@@ -468,10 +468,10 @@ const UploadCarousel = () => {
 
                               </div>
                             </div>
-                            {productData.carouselImage && (
+                            {updateData?.carouselImage?.length > 0 && (
 
                               <div className='flex flex-wrap gap-2 mt-4'>
-                                {concatArray.map((item, index) => (
+                                {updateData?.carouselImage?.map((item, index) => (
                                   <div key={index} className='w-[6.5rem] lg:w-[9.5rem]  relative h-fit rounded'>
                                     <img src={item} className='rounded' alt="item-image" />
                                     <MdClose onClick={() => removeExistedImageFunc(item)} className='rounded-full cursor-pointer h-6 w-6 p-1 absolute top-1 hover:bg-indigo-700 right-1 bg-black text-white' />
@@ -495,7 +495,7 @@ const UploadCarousel = () => {
                           {spin ?
                             <button className='bg-black order-1 lg:order-2 w-full lg:w-[40%] text-white rounded p-2 flex items-center gap-2 justify-center'><SmallLoading /> Updating...</button>
                             :
-                            <button onClick={() => updateCarouselFunc(sendUpdatedData)} className={`bg-black order-1 lg:order-2  w-full lg:w-[40%] text-white rounded hover:bg-blue-500 p-2 ${updateData.offerTitle || updateData.carouselImage.length > 0 || concatArray.length <= 0 ? "block" : "hidden"}`}>Update</button>
+                            <button onClick={updateCarouselFunc} className="bg-black order-1 lg:order-2  w-full lg:w-[40%] text-white rounded hover:bg-blue-500 p-2 ">Update</button>
                           }
 
                         </div>

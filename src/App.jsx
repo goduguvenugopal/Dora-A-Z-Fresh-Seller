@@ -24,8 +24,8 @@ function App() {
   const [token, setToken] = useState("")
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(false)
-
-
+  const [orders, setOrders] = useState([])
+  const [orderSpin, setOrderSpin] = useState(false)
 
   useEffect(() => {
     // retrieving token from localstorage 
@@ -61,17 +61,51 @@ function App() {
     }
 
   }, [token])
+
+
+  // fetching orders 
+  useEffect(() => {
+    const getOrdersFunction = async () => {
+      try {
+        setOrderSpin(true)
+        const res = await axios.get(`${api}/order/get-all-orders`)
+        if (res) {
+          console.log(res.data);
+          setOrders(res.data.retrievedAllOrders.reverse())
+          setOrderSpin(false)
+
+        }
+      } catch (error) {
+        console.error(error);
+        setOrderSpin(false)
+
+      }
+    }
+    // if role is Admin orders function will be called 
+    if (user.role === "admin") {
+      getOrdersFunction()
+    }
+  }, [user])
+
+
+
   return (
     <>
-      <dataContext.Provider value={{ token, setToken, api, user, setUser, loading, setLoading }}>
+      <dataContext.Provider value={{
+        token, setToken, api,
+        user, setUser,
+        loading, setLoading,
+        orders, setOrders,
+        orderSpin, setOrderSpin
+      }}>
         {user.role === "admin" && token && (<Navbar />)}
         <Routes>
 
           {user.role === "admin" && token ? (<>
             <Route path="/" element={<Orders />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/products/product_over_view/:id" element={<ProductOverView/>} >
-            <Route path='updateproduct' element={<ProductUpdateForm/>}/>
+            <Route path="/products/product_over_view/:id" element={<ProductOverView />} >
+              <Route path='updateproduct' element={<ProductUpdateForm />} />
             </Route>
             <Route path="/admin" element={<Admin />} />
             <Route path="/uploadproducts" element={<UploadProducts />} />
