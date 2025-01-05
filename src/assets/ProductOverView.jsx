@@ -74,7 +74,10 @@ const ProductOverView = () => {
         Product Over View & Update
       </h5>
       <hr className='border  border-gray-200 mb-3 mt-1' />
-      <div className='flex justify-around pb-3'>
+      <div className='flex justify-between lg:justify-around gap-1 flex-wrap pb-3'>
+        <Link to="/products"  className= "py-1 font-semibold rounded-full border border-gray-400 px-3 text-center  hover:bg-black hover:text-white">
+          All Products
+        </Link>
         <Link to="." onClick={() => setBtnToggle(true)} className={` hover:border-blue-700 cursor-pointer  font-semibold select-none ${btnToggle ? "bg-blue-500 text-white  font-semibold rounded-full  text-center border border-blue-500 px-3  py-1" : "py-1  text-black  font-semibold rounded-full border border-gray-400 px-3 text-center  "}`}>
           Product
         </Link>

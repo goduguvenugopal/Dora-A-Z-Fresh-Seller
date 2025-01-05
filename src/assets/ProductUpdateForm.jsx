@@ -38,8 +38,6 @@ const ProductUpdateForm = () => {
   const [itemSubCategory, setItemSubCategory] = useState([])
 
 
-  console.log(productData);
-
 
 
   // displaying sub category names with conditions 
