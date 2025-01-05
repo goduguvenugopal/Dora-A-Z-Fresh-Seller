@@ -72,9 +72,9 @@ const Orders = () => {
           </div>
         </div>
         <div className='flex justify-between w-full mt-5'>
-          <div className='relative h-10 w-[7.2rem] cursor-pointer'>
+          <div className='relative h-10 w-[7.6rem] cursor-pointer'>
             <label onClick={handleLabelClick} htmlFor="selectDate" className='border-2 w-full cursor-pointer h-full rounded border-blue-500 flex items-center justify-between px-1'>
-              {new Date(selectDate).toLocaleDateString("en-GB")} <IoCalendarOutline />
+              {new Date(selectDate).toLocaleDateString("en-GB")} <IoCalendarOutline size={20} />
             </label>
             <input type="date" className=' w-full absolute inset-0 opacity-0  h-full cursor-pointer' ref={dateRef} value={selectDate} onChange={dateHandleFunc} name="selectDate" id="selectDate" />
           </div>
@@ -118,7 +118,12 @@ const Orders = () => {
                   <Link to={`/order_over_view/${item._id}`} key={item._id} className='block lg:w-[35%] border bg-orange-300 hover:shadow-gray-400 relative  mb-3 shadow-md rounded shadow-gray-300 p-3'>
                     <h6 className='text-white rounded p-1 px-2 bg-blue-500 w-fit'>Order From :  <span className='font-semibold capitalize text-white'>{item.shippingAddress[0].name}</span></h6>
                     <h6 className='text-gray-600 mt-1'>Total Amount : <span className='font-semibold capitalize text-black'>₹{item.totalAmount}</span></h6>
-                    <h6 className='text-gray-600 mt-1'>Order Status : <span className={`font-semibold capitalize ${item.orderStatus === "pending" ? "bg-white text-orange-700 rounded p-1 px-2" : ""} ${item.orderStatus === "cancelled" ? "bg-red-600 text-white rounded p-1 px-2" : ""} ${item.orderStatus === "confirmed" ? "bg-green-600 text-white rounded p-1 px-2" : ""} ${item.orderStatus === "delivered" ? "bg-green-600 text-white rounded p-1 px-2" : ""} ${item.orderStatus === "shipped" ? "bg-green-600 text-white rounded p-1 px-2" : ""} ${item.orderStatus === "outofdelivery" ? "bg-green-600 text-white rounded p-1 px-2" : ""}`}>{item.orderStatus}</span></h6>
+                    <h6 className='text-gray-600 mt-1'>Order Status : <span className={`font-semibold capitalize ${item.orderStatus === "pending" ? "bg-white text-orange-700 rounded p-1 px-2" : ""}
+                     ${item.orderStatus === "cancelled" ? "bg-red-600 text-white rounded p-1 px-2" : ""} 
+                     ${item.orderStatus === "confirmed" ? "bg-green-600 text-white rounded p-1 px-2" : ""}
+                      ${item.orderStatus === "delivered" ? "bg-green-600 text-white rounded p-1 px-2" : ""} 
+                      ${item.orderStatus === "shipped" ? "bg-green-600 text-white rounded p-1 px-2" : ""}
+                       ${item.orderStatus === "outofdelivery" ? "bg-green-600 text-white rounded p-1 px-2" : ""}`}>{item.orderStatus.replace("outofdelivery", "out Of delivery")}</span></h6>
                     <h6 className='text-gray-600 mt-1'>Address : <span className='font-semibold capitalize text-black'>{item.shippingAddress[0].city}</span></h6>
                     <h6 className='text-gray-600 mt-1'>Mobile : <span className='font-semibold capitalize text-black'>{item.shippingAddress[0].phone}</span></h6>
                     <h6 className='text-gray-600 mt-1'>Ordered date : <span className='font-semibold capitalize text-black'>{item.orderDate}</span></h6>

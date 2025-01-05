@@ -72,7 +72,6 @@ function App() {
         setOrderSpin(true)
         const res = await axios.get(`${api}/order/get-all-orders`)
         if (res) {
-          console.log(res.data.retrievedAllOrders[0]);
           setOrders(res.data.retrievedAllOrders.reverse())
           setFilterOrders(res.data.retrievedAllOrders.reverse())
           setOrderSpin(false)
