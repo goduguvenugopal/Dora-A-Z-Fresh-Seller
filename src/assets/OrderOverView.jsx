@@ -109,8 +109,8 @@ const OrderOverView = () => {
                             <p><strong className="text-xl">Total Amount:</strong> <span className="text-green-700 font-bold text-[1.2rem]">₹{orderDetails?.totalAmount}</span></p>
                             <h3 className="text-lg font-medium">Order Date: <span className="text-gray-700">{orderDetails?.orderDate}</span></h3>
                             <div className='mt-2 flex justify-between flex-wrap gap-2'>
-                                <button className='bg-orange-600 hover:bg-orange-500 text-white rounded  p-1 px-2 ' onClick={() => setDelayModal(true)}>Send Delay Message</button>
-                                <button className='bg-blue-800 hover:bg-blue-600 text-white rounded  p-1 px-2' onClick={() => setSelectModal(true)}>Update Order Status</button>
+                                <button className='bg-orange-600 hover:bg-orange-500 text-white rounded h-[2.3rem]  px-2 ' onClick={() => setDelayModal(true)}>Send Delay Message</button>
+                                <button className='bg-blue-800 hover:bg-blue-600 text-white rounded h-[2.3rem]  px-2' onClick={() => setSelectModal(true)}>Update Order Status</button>
                             </div>
                         </div>
                     </div>
@@ -159,14 +159,14 @@ const OrderOverView = () => {
             {/* update order status modal  */}
             {selectModal &&
                 <div onClick={() => setSelectModal(false)} className='bg-gray-700  fixed top-0 left-0 p-3 bg-opacity-50 w-screen h-screen flex justify-center items-center'>
-                    <div className='bg-white p-3 rounded'>
+                    <div className='bg-white p-3 rounded w-[80%] lg:w-[30%] text-center'>
                         <h5>Update Order Status</h5>
                         <select
                             onClick={(e) => e.stopPropagation()}
                             name="options"
                             id="options"
                             onChange={statusUpdateFunc}
-                            className="border-2 mt-3 outline-none border-blue-500 rounded p-1 h-10 bg-white"
+                            className="border-2 mt-3 outline-none w-full border-blue-500 rounded p-1 h-10 bg-white"
                             defaultValue=""
                         >
                             <option
@@ -197,7 +197,7 @@ const OrderOverView = () => {
             {/* order delay message modal  */}
             {delayModal &&
                 <div onClick={() => setDelayModal(false)} className='bg-gray-700  fixed top-0 left-0 p-3 bg-opacity-50 w-screen h-screen flex justify-center items-center'>
-                    <div onClick={(e) => e.stopPropagation()} className='bg-white p-3 rounded w-[70%]'>
+                    <div onClick={(e) => e.stopPropagation()} className='bg-white p-3 rounded w-full lg:w-[50%]'>
                         <h5>Enter Delay Message</h5>
 
                         <div className="mt-2">

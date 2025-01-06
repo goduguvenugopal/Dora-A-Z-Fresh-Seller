@@ -28,6 +28,7 @@ const Subscription = () => {
   }, [orders, selectDate])
 
 
+console.log(todayOrders);
 
   const dateHandleFunc = (event) => {
     const eventDate = event.target.value;
@@ -63,7 +64,7 @@ const Subscription = () => {
   return (
     <>
      <div className='mt-[6.1rem] p-3 lg:p-5'>
-      <h5 className='text-center text-2xl font-semibold mb-3 '>Subscription Orders : {todayOrders.length}</h5>
+      <h5 className='text-center text-2xl font-semibold mb-3 '>Subscription Orders</h5>
       <hr className='border border-gray-400 mb-5' />
       <div className='mb-2 lg:w-full '>
         <div className='lg:flex lg:justify-center '>
@@ -116,8 +117,8 @@ const Subscription = () => {
             {todayOrders.length > 0 ?
               <div className='lg:flex lg:flex-wrap lg:justify-center lg:gap-4 '>
                 {todayOrders.map((item) => (
-                  <Link to={`/order_over_view/${item._id}`} key={item._id} className={`block lg:w-[35%] border bg-orange-300 hover:shadow-gray-400 relative  mb-3 shadow-md rounded shadow-gray-300 p-3 ${item?.orderedProducts?.orderType === "subscription" ?"hidden" : "block"}`}>
-                    <h6 className='text-white rounded p-1 px-2 bg-blue-500 w-fit'>Order From :  <span className='font-semibold capitalize text-white'>{item.shippingAddress[0].name}</span></h6>
+                  <Link to={`/order_over_view/${item._id}`} key={item._id} className={`bloc lg:w-[35%] border bg-orange-300 hover:shadow-gray-400 relative  mb-3 shadow-md rounded shadow-gray-300 p-3 ${item?.orderedProdcuts[0]?.orderType === "buyonce" ? "hidden" : "block"}`}>
+                    <h6 className='text-white rounded p-1 px-2 bg-blue-500 w-fit'>Order From :  <span className='font-semibold capitalize text-white'>{item.shippingAddress[0]?.name}</span></h6>
                     <h6 className='text-gray-600 mt-1'>Total Amount : <span className='font-semibold capitalize text-black'>₹{item.totalAmount}</span></h6>
                     <h6 className='text-gray-600 mt-1'>Order Status : <span className={`font-semibold capitalize ${item.orderStatus === "pending" ? "bg-white text-orange-700 rounded p-1 px-2" : ""}
                      ${item.orderStatus === "cancelled" ? "bg-red-600 text-white rounded p-1 px-2" : ""} 
