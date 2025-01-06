@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 
 const Orders = () => {
-  const { orders, orderSpin, filterOrders, setFilterOrders } = useContext(dataContext)
+  const { orders, orderSpin} = useContext(dataContext)
   const [todayOrders, setTodayOrders] = useState([])
   const [todayOrders1, setTodayOrders1] = useState([])
   const [selectDate, setSelectDate] = useState(() => {
@@ -24,7 +24,7 @@ const Orders = () => {
     setTodayOrders(remainTodayOrders)
     setTodayOrders1(remainTodayOrders)
 
-  }, [filterOrders, selectDate])
+  }, [orders, selectDate])
 
 
 

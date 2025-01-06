@@ -27,7 +27,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [orders, setOrders] = useState([])
   const [orderSpin, setOrderSpin] = useState(false)
-  const [filterOrders, setFilterOrders] = useState([])
+  const [reload, setReload] = useState(false)
 
   useEffect(() => {
     // retrieving token from localstorage 
@@ -73,7 +73,6 @@ function App() {
         const res = await axios.get(`${api}/order/get-all-orders`)
         if (res) {
           setOrders(res.data.retrievedAllOrders.reverse())
-          setFilterOrders(res.data.retrievedAllOrders.reverse())
           setOrderSpin(false)
 
         }
@@ -87,7 +86,7 @@ function App() {
     if (user.role === "admin") {
       getOrdersFunction()
     }
-  }, [user])
+  }, [user ,reload])
 
 
 
@@ -99,7 +98,7 @@ function App() {
         loading, setLoading,
         orders, setOrders,
         orderSpin, setOrderSpin,
-        filterOrders, setFilterOrders
+        reload, setReload
       }}>
         {user.role === "admin" && token && (<Navbar />)}
         <Routes>
