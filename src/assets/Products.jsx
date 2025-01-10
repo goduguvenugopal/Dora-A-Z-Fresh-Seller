@@ -91,6 +91,8 @@ const Products = () => {
               <option value="milk">Milk</option>
               <option value="vegetables">Vegetables</option>
               <option value="food">Food</option>
+              <option value="meat">Meat</option>
+              <option value="non-veg">Non-Veg</option>
             </select>
 
           </div>
