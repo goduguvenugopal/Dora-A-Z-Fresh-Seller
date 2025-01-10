@@ -5,7 +5,7 @@ import { Loading, SmallLoading } from '../assets/Loading'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { dataContext } from '../App'
-import { milkBasedItems, foodBasedNames, vegetables } from './itemSubCategory';
+import { milkBasedItems, vegetables, meats, vegFoodBasedNames, nonVegFoods } from './itemSubCategory';
 
 
 
@@ -37,7 +37,7 @@ const UploadProducts = () => {
   const [itemSubCategory, setItemSubCategory] = useState([])
 
 
-// displaying sub category names with conditions 
+  // displaying sub category names with conditions 
   useEffect(() => {
     if (productData.itemCategory === "milk") {
       setItemSubCategory(milkBasedItems)
@@ -45,7 +45,12 @@ const UploadProducts = () => {
       setItemSubCategory(vegetables)
 
     } else if (productData.itemCategory === "food") {
-      setItemSubCategory(foodBasedNames)
+      setItemSubCategory(vegFoodBasedNames)
+    } else if (productData.itemCategory === "meat") {
+      setItemSubCategory(meats)
+    }
+    else if (productData.itemCategory === "non-veg") {
+      setItemSubCategory(nonVegFoods)
     }
   }, [productData.itemCategory])
 
@@ -405,6 +410,10 @@ const UploadProducts = () => {
                       <option value="milk">Milk</option>
                       <option value="vegetables">Vegetables</option>
                       <option value="food">Food</option>
+                      <option value="meat">Meat</option>
+                      <option value="non-veg">Non-Veg</option>
+
+
                     </select>
                     <svg
                       className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"

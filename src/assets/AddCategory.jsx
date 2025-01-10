@@ -252,6 +252,8 @@ const AddCategory = () => {
                       <option value="milk">Milk</option>
                       <option value="vegetables">Vegetables</option>
                       <option value="food">Food</option>
+                      <option value="meat">Meat</option>
+
                     </select>
                     <svg
                       className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
