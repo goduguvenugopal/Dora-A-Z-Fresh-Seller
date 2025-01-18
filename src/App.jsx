@@ -16,6 +16,7 @@ import ProductOverView from './assets/ProductOverView.jsx';
 import ProductUpdateForm from './assets/ProductUpdateForm.jsx';
 import PageNotFound from './assets/PageNotFound.jsx';
 import OrderOverView from './assets/OrderOverView.jsx';
+import AddDiscount from './assets/AddDiscount.jsx';
 
 
 export const dataContext = createContext()
@@ -86,7 +87,7 @@ function App() {
     if (user.role === "admin") {
       getOrdersFunction()
     }
-  }, [user ,reload])
+  }, [user, reload])
 
 
 
@@ -113,8 +114,9 @@ function App() {
             <Route path="/uploadproducts" element={<UploadProducts />} />
             <Route path="/addcategory" element={<AddCategory />} />
             <Route path='/carousel' element={<UploadCarousel />} />
+            <Route path='/discount' element={<AddDiscount />} />
             <Route path='/subscription' element={<Subscription />} />
-            <Route path='/order_over_view/:orderId' element={<OrderOverView/>}/>
+            <Route path='/order_over_view/:orderId' element={<OrderOverView />} />
             <Route path="*" element={<PageNotFound />} />
 
           </>) : <>
