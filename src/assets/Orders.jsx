@@ -124,7 +124,7 @@ const Orders = () => {
                       ${item.orderStatus === "delivered" ? "bg-green-600 text-white rounded p-1 px-2" : ""} 
                       ${item.orderStatus === "shipped" ? "bg-green-600 text-white rounded p-1 px-2" : ""}
                        ${item.orderStatus === "outofdelivery" ? "bg-green-600 text-white rounded p-1 px-2" : ""}`}>{item.orderStatus.replace("outofdelivery", "out Of delivery")}</span></h6>
-                    <h6 className='text-gray-600 mt-1'>Address : <span className='font-semibold capitalize text-black'>{item.shippingAddress[0].city}</span></h6>
+                    <h6 className='text-gray-600 mt-1'>Address : <span className='font-semibold capitalize text-black'>{item.shippingAddress[0].village}</span></h6>
                     <h6 className='text-gray-600 mt-1'>Mobile : <span className='font-semibold capitalize text-black'>{item.shippingAddress[0].phone}</span></h6>
                     <h6 className='text-gray-600 mt-1'>Ordered date : <span className='font-semibold capitalize text-black'>{item.orderDate}</span></h6>
                     <h6 className='text-gray-600  mt-1'>Order Id : <span className='font-semibold capitalize underline text-black'>{item._id}</span></h6>

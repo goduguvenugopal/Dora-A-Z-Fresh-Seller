@@ -147,7 +147,6 @@ const AddDiscount = () => {
 
     }
 
-
   }
 
   // delete discounts function

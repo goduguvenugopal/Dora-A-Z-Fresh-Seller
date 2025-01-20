@@ -22,6 +22,7 @@ const OrderOverView = () => {
         setOrderDetails(result)
     }, [orderId, orders])
 
+console.log(orderDetails);
 
 
     // status update function 
@@ -82,8 +83,8 @@ const OrderOverView = () => {
                             {orderDetails?.shippingAddress?.map((address, index) => (
                                 <div key={index} className="bg-white  flex flex-col gap-2">
                                     <p><strong>Name:</strong> {address.name}</p>
-                                    <p><strong>Address:</strong> {address.address}</p>
-                                    <p><strong>City:</strong> {address.city}</p>
+                                    <p><strong>Address:</strong> {address.village},  {address.street}</p>
+                                    <p><strong>City:</strong> {address.district}</p>
                                     <p><strong>State:</strong> {address.state}</p>
                                     <p><strong>Postal Code:</strong> {address.postalCode}</p>
                                     <p><strong>Phone:</strong> {address.phone}</p>
@@ -123,26 +124,28 @@ const OrderOverView = () => {
                         <hr className='border border-orange-200 my-3' />
 
                         {orderDetails?.orderedProdcuts?.map((product) => (
-                            <div key={product._id} className='flex flex-col gap-2'>
-                                <p><strong>Product Name:</strong> {product.itemName}</p>
-                                <p><strong>Category:</strong> {product.itemCategory}</p>
-                                <p><strong>Cost:</strong> ${product.itemCost}</p>
+                            <div key={product.productId} className='flex flex-col gap-2'>
+                                <p><strong>Product Name:</strong> {product.products[0].itemName}</p>
+                                <p><strong>Category:</strong> {product.products[0].itemCategory}</p>
+                                <p><strong>Cost:</strong> Rs. {product.totalAmount}</p>
                                 <p><strong>Quantity:</strong> {product.itemQty}</p>
-                                <p><strong>Weight:</strong> {product.itemWeight.join(', ')}</p>
+                                <p><strong>Weight:</strong> {product.products[0].itemWeight}ml</p>
                                 <h6 className='font-bold'>Order Type: <span className='bg-green-700 py-1 w-fit px-2 font-semibold text-white rounded'>{product.orderType.replace("buyonce", "Buy Once")}</span> </h6>
-                                <p><strong>Subscription:</strong> From {product.from} to {product.to}</p>
+                                {product.orderType === "subscription" &&
+                                    <p><strong>Days:</strong> {product?.products[0]?.days}</p>
+                                }
+                                    
 
                                 <div className="mt-4">
-                                    <h5 className="font-medium">Product Images:</h5>
+                                    <h5 className="font-medium">Product Image:</h5>
                                     <div className="flex gap-3 flex-wrap mt-2">
-                                        {product?.itemImage?.map((img, i) => (
+                                      
                                             <img
-                                                key={i}
-                                                src={img}
-                                                alt={`Product Image ${i + 1}`}
+                                                src={product?.products[0]?.itemImage[0]}
+                                                alt="Product Image"
                                                 className="w-32 h-32 object-cover rounded-md border"
                                             />
-                                        ))}
+                                        
                                     </div>
                                 </div>
                                 <hr className='border border-orange-200 my-3' />
