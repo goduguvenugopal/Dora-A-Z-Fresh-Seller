@@ -75,13 +75,18 @@ const ProductOverView = () => {
       </h5>
       <hr className='border  border-gray-200 mb-3 mt-1' />
       <div className='flex justify-between lg:justify-around gap-1 flex-wrap pb-3'>
-        <Link to="/products"  className= "py-1 font-semibold rounded-full border border-gray-400 px-3 text-center  hover:bg-black hover:text-white">
+        <Link to="/products" className="py-1 font-semibold rounded-full border border-gray-400 px-3 text-center  hover:bg-black hover:text-white">
           All Products
         </Link>
         <Link to="." onClick={() => setBtnToggle(true)} className={` hover:border-blue-700 cursor-pointer  font-semibold select-none ${btnToggle ? "bg-blue-500 text-white  font-semibold rounded-full  text-center border border-blue-500 px-3  py-1" : "py-1  text-black  font-semibold rounded-full border border-gray-400 px-3 text-center  "}`}>
           Product
-        </Link>
-        <Link to="updateproduct" onClick={() => setBtnToggle(false)} className={`hover:border-blue-700 cursor-pointer  font-semibold select-none ${!btnToggle ? " w-20 text-center bg-blue-500 text-white  font-semibold rounded-full   border border-blue-500  py-1" : "py-1   w-20 text-center  text-black  font-semibold rounded-full border border-gray-400 "}`}>Update</Link>
+        </Link>{
+          product?._id ?
+            <Link to="updateproduct" onClick={() => setBtnToggle(false)} className={`hover:border-blue-700 cursor-pointer  font-semibold select-none ${!btnToggle ? " w-20 text-center bg-blue-500 text-white  font-semibold rounded-full   border border-blue-500  py-1" : "py-1   w-20 text-center  text-black  font-semibold rounded-full border border-gray-400 "}`}>Update</Link>
+            :
+            <div className={`hover:border-blue-700 cursor-pointer  font-semibold select-none ${!btnToggle ? " w-20 text-center bg-blue-500 text-white  font-semibold rounded-full   border border-blue-500  py-1" : "py-1   w-20 text-center  text-black  font-semibold rounded-full border border-gray-400 "}`}>Update</div>
+
+        }
       </div>
 
       <hr className='border border-dashed border-gray-400 mb-5' />
@@ -135,7 +140,7 @@ const ProductOverView = () => {
               </div>
               <hr className='border  border-gray-200 mb-4 mt-4' />
               {delSpin ?
-                <button className='flex items-center justify-center gap-3 w-full font-semibold bg-red-500 p-2 cursor-auto rounded text-white'><SmallLoading/>Deleting Product...</button>
+                <button className='flex items-center justify-center gap-3 w-full font-semibold bg-red-500 p-2 cursor-auto rounded text-white'><SmallLoading />Deleting Product...</button>
                 : <button className='w-full hover:bg-red-800 font-semibold bg-red-600 p-2 rounded text-white' onClick={deleteProductFunc}>Delete Product</button>
               }
             </div>
