@@ -1,3 +1,150 @@
+// main categories
+export const Maincategories = [
+  "milk",
+  "vegetables",
+  "food",
+  "meat",
+  "beverages",
+  "non-veg",
+  "sweets",
+  "bakery",
+  "pickles",
+  "spices"
+];
+
+// pickles 
+export const indianPickles = [
+  "Mango Pickle",
+  "Lemon Pickle",
+  "Garlic Pickle",
+  "Chili Pickle",
+  "Mixed Vegetable Pickle",
+  "Ginger Pickle",
+  "Carrot Pickle",
+  "Tomato Pickle",
+  "Green Chili Pickle",
+  "Kundru (Ivy Gourd) Pickle",
+  "Sweet Lime Pickle",
+  "Amla (Indian Gooseberry) Pickle",
+  "Bitter Gourd Pickle",
+  "Tamarind Pickle",
+  "Onion Pickle"
+];
+
+
+// spices 
+export const indianSpices = [
+  "Turmeric",
+  "Cumin",
+  "Coriander",
+  "Chili Powder",
+  "Ginger",
+  "Garlic",
+  "Cardamom",
+  "Cloves",
+  "Fennel Seeds",
+  "Mustard Seeds",
+  "Cinnamon",
+  "Bay Leaves",
+  "Black Pepper",
+  "Asafoetida (Hing)",
+  "Fenugreek",
+  "Nutmeg",
+  "Mace",
+  "Ajwain",
+  "Saffron",
+  "Tamarind"
+];
+
+
+// sweets 
+export const indianSweets = [
+  "Gulab Jamun",
+  "Jalebi",
+  "Rasgulla",
+  "Barfi",
+  "Ladoo",
+  "Kaju Katli",
+  "Kulfi",
+  "Gajar Halwa",
+  "Rasgulla",
+  "Peda",
+  "Halwa",
+  "Sandesh",
+  "Mysore Pak",
+  "Chamcham",
+  "Imarti",
+  "Khoya",
+  "Baklava",
+  "Jangri",
+  "Fried Laddu",
+  "Seviyan"
+];
+
+
+// bevarages
+export const indianCoolDrinks = [
+  "Thums Up",
+  "Sprite",
+  "Mazza",
+  "Fruity Mango",
+  "Coca-Cola",
+  "Pepsi",
+  "7UP",
+  "Fanta",
+  "Mirinda",
+  "Appy Fizz",
+  "Tango",
+  "Slice",
+  "Nimbu Pani",
+  "Aam Panna",
+  "Lassi",
+  "Thandai",
+  "Jaljeera",
+  "Chaas",
+  "Rooh Afza",
+  "Sugarcane Juice",
+  "Sattu Drink",
+  "Badam Milk",
+  "Buttermilk",
+  "Coconut Water",
+  "Coffee",
+  "Tea",
+  "Water",
+  "Iced Tea",
+  "Lemon Water",
+  "Green Tea",
+  "Black Tea",
+  "Herbal Tea",
+];
+
+
+// bakery items 
+export const bakeryItems = [
+  "Bread",
+  "Butter Toast",
+  "Pav",
+  "Buns",
+  "Biscotti",
+  "Rusks",
+  "Biscuit",
+  "Cakes",
+  "Pastries",
+  "Muffins",
+  "Donuts",
+  "Croissants",
+  "Samosa",
+  "Puffs",
+  "Pineapple Cake",
+  "Fruit Cake",
+  "Chocolates",
+  "Cookies",
+  "Cupcakes",
+  "Banana Bread"
+];
+
+
+
 // vegetables names
 export const vegetables = [
   "Carrot",
@@ -55,7 +202,7 @@ export const milkBasedItems = [
   "Khoya",
 ];
 
-// veg based food items 
+// veg based food items
 export const vegFoodBasedNames = [
   "Pizza",
   "Burger",
@@ -97,7 +244,7 @@ export const vegFoodBasedNames = [
   "Rasmalai",
   "Peda",
   "Barfi",
-  "Halwa"
+  "Halwa",
 ];
 
 // meats
@@ -117,7 +264,7 @@ export const meats = [
   "Clams",
 ];
 
-// non-veg food names 
+// non-veg food names
 export const nonVegFoods = [
   "Chicken Biryani",
   "Grilled Salmon",
@@ -138,5 +285,5 @@ export const nonVegFoods = [
   "Pepperoni Pizza",
   "Clam Chowder",
   "BBQ Chicken Wings",
-  "Meatball Spaghetti"
+  "Meatball Spaghetti",
 ];

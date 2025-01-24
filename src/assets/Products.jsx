@@ -4,6 +4,7 @@ import axios from 'axios'
 import { CustomLoading, Loading } from './Loading'
 import { Link } from 'react-router-dom'
 import { FaSearch } from 'react-icons/fa'
+import { Maincategories } from './itemSubCategory'
 
 
 
@@ -88,11 +89,10 @@ const Products = () => {
                 Filter
               </option>
               <option value="all">All</option>
-              <option value="milk">Milk</option>
-              <option value="vegetables">Vegetables</option>
-              <option value="food">Food</option>
-              <option value="meat">Meat</option>
-              <option value="non-veg">Non-Veg</option>
+              {Maincategories.map((item, index) => (
+                <option key={index} className='capitalize' value={item}>{item}</option>
+
+              ))}
             </select>
 
           </div>

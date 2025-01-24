@@ -5,7 +5,7 @@ import { Loading, SmallLoading } from '../assets/Loading'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { dataContext } from '../App'
-import { milkBasedItems, vegetables, meats, vegFoodBasedNames, nonVegFoods } from './itemSubCategory';
+import { milkBasedItems, vegetables, meats, vegFoodBasedNames, nonVegFoods, indianCoolDrinks, indianPickles, indianSpices, indianSweets, Maincategories, bakeryItems } from './itemSubCategory';
 
 
 
@@ -51,6 +51,20 @@ const UploadProducts = () => {
     }
     else if (productData.itemCategory === "non-veg") {
       setItemSubCategory(nonVegFoods)
+    }
+    else if (productData.itemCategory === "beverages") {
+      setItemSubCategory(indianCoolDrinks)
+    } else if (productData.itemCategory === "pickles") {
+      setItemSubCategory(indianPickles)
+    }
+    else if (productData.itemCategory === "bakery") {
+      setItemSubCategory(bakeryItems)
+    }
+    else if (productData.itemCategory === "sweets") {
+      setItemSubCategory(indianSweets)
+    }
+    else if (productData.itemCategory === "spices") {
+      setItemSubCategory(indianSpices)
     }
   }, [productData.itemCategory])
 
@@ -407,11 +421,11 @@ const UploadProducts = () => {
                       className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1  outline-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                     >
                       <option disabled value="">Select the Category</option>
-                      <option value="milk">Milk</option>
-                      <option value="vegetables">Vegetables</option>
-                      <option value="food">Food</option>
-                      <option value="meat">Meat</option>
-                      <option value="non-veg">Non-Veg</option>
+                      {Maincategories.map((item, index) => (
+                        <option key={index} className='capitalize' value={item}>{item}</option>
+
+                      ))}
+
 
 
                     </select>
