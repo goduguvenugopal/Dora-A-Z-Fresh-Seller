@@ -7,6 +7,7 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBin6Line } from 'react-icons/ri'
+import { Maincategories } from './itemSubCategory'
 
 
 const AddCategory = () => {
@@ -249,10 +250,10 @@ const AddCategory = () => {
                       className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1  outline-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                     >
                       <option disabled value="">Select the options</option>
-                      <option value="milk">Milk</option>
-                      <option value="vegetables">Vegetables</option>
-                      <option value="food">Food</option>
-                      <option value="meat">Meat</option>
+                      {Maincategories.map((item, index) => (
+                        <option key={index} className={`capitalize ${item === "non-veg" && "hidden"}`} value={item}>{item}</option>
+
+                      ))}
 
                     </select>
                     <svg
