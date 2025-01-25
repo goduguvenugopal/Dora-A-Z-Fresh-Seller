@@ -6,13 +6,47 @@ export const Maincategories = [
   "meat",
   "beverages",
   "non-veg",
+  "snacks",
   "sweets",
   "bakery",
   "pickles",
-  "spices"
+  "spices",
 ];
 
-// pickles 
+export const snacksList = [
+  // Chocolates
+  "Dairy Milk",
+  "KitKat",
+  "Snickers",
+  "Five Star",
+  "Perk",
+  "Munch",
+  "Milkybar",
+  "Gems",
+
+  // Biscuits
+  "Parle-G",
+  "Marie Gold",
+  "Oreo",
+  "Bourbon",
+  "Hide & Seek",
+  "Good Day (Cashew, Butter)",
+  "Treat (Chocolate, Strawberry)",
+  "Milk Bikis",
+
+  // Other Snacks
+  "Kurkure",
+  "Lays Chips (Magic Masala, Classic Salted)",
+  "Bingo! Mad Angles",
+  "Haldiram’s Aloo Bhujia",
+  "Roasted Makhana (Fox Nuts)",
+  "Peanut Chikki",
+  "Banana Chips",
+  "Murukku",
+  "Popcorn (Act II)",
+];
+
+// pickles
 export const indianPickles = [
   "Mango Pickle",
   "Lemon Pickle",
@@ -28,11 +62,10 @@ export const indianPickles = [
   "Amla (Indian Gooseberry) Pickle",
   "Bitter Gourd Pickle",
   "Tamarind Pickle",
-  "Onion Pickle"
+  "Onion Pickle",
 ];
 
-
-// spices 
+// spices
 export const indianSpices = [
   "Turmeric",
   "Cumin",
@@ -53,11 +86,10 @@ export const indianSpices = [
   "Mace",
   "Ajwain",
   "Saffron",
-  "Tamarind"
+  "Tamarind",
 ];
 
-
-// sweets 
+// sweets
 export const indianSweets = [
   "Gulab Jamun",
   "Jalebi",
@@ -78,9 +110,8 @@ export const indianSweets = [
   "Baklava",
   "Jangri",
   "Fried Laddu",
-  "Seviyan"
+  "Seviyan",
 ];
-
 
 // bevarages
 export const indianCoolDrinks = [
@@ -118,8 +149,7 @@ export const indianCoolDrinks = [
   "Herbal Tea",
 ];
 
-
-// bakery items 
+// bakery items
 export const bakeryItems = [
   "Bread",
   "Butter Toast",
@@ -140,10 +170,8 @@ export const bakeryItems = [
   "Chocolates",
   "Cookies",
   "Cupcakes",
-  "Banana Bread"
+  "Banana Bread",
 ];
-
-
 
 // vegetables names
 export const vegetables = [
@@ -175,7 +203,10 @@ export const vegetables = [
   "Drumstick",
   "Okra",
   "Turnip",
+  "Curry leaves",
   "Mushroom",
+  "Drumstick leaves",
+  "Raw banana",
 ];
 
 //   milk based items names
@@ -253,6 +284,7 @@ export const meats = [
   "Mutton",
   "Fish",
   "Prawns",
+  "Eggs",
   "Crab",
   "Lamb",
   "Turkey",

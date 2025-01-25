@@ -5,7 +5,7 @@ import { Loading, SmallLoading } from '../assets/Loading'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { dataContext } from '../App'
-import { milkBasedItems, vegetables, meats, vegFoodBasedNames, nonVegFoods, indianCoolDrinks, indianPickles, indianSpices, indianSweets, Maincategories, bakeryItems } from './itemSubCategory';
+import { milkBasedItems, vegetables, meats, vegFoodBasedNames, nonVegFoods, indianCoolDrinks, indianPickles, indianSpices, indianSweets, Maincategories, bakeryItems, snacksList } from './itemSubCategory';
 
 
 
@@ -65,6 +65,9 @@ const UploadProducts = () => {
     }
     else if (productData.itemCategory === "spices") {
       setItemSubCategory(indianSpices)
+    } 
+    else if (productData.itemCategory === "snacks") {
+      setItemSubCategory(snacksList)
     }
   }, [productData.itemCategory])
 
