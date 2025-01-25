@@ -547,7 +547,7 @@ const UploadProducts = () => {
                       <option value="250">250 grams</option>
                       <option value="500">500 grams</option>
                       <option value="1000">1 kg</option>
-                      <option value="2000">2 kg</option>
+                     
 
 
 
