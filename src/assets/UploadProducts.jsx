@@ -548,9 +548,6 @@ const UploadProducts = () => {
                       <option value="500">500 grams</option>
                       <option value="1000">1 kg</option>
                      
-
-
-
                     </select>
                     <svg
                       className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
@@ -624,16 +621,10 @@ const UploadProducts = () => {
                     Add Products
                   </button>
                 }
-
               </div>
             </div>
-
-
-
           </div>
         </form>
-
-
       </div>
     </>
   )
