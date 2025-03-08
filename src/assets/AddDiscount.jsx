@@ -348,8 +348,8 @@ const AddDiscount = () => {
                       <div className='font-semibold flex relative flex-col border  items-start gap-3 mb-3 p-3 rounded' key={item._id}>
                         <span className='mt-2 '>Seven days : <span className='text-blue-700'>{item.sevenDays}</span></span>
                         <span className='mt-2 '>Ten days : <span className='text-blue-700'>{item.tenDays}</span></span>
-                        <span className='mt-2 '>Twenty days : <span className='text-blue-700'>{item.twentyDays}</span></span>
-                        <span className='mt-2 '>Thirty days : <span className='text-blue-700'>{item.thirtyDays}</span></span>
+                        <span className='mt-2 '>Half litre discount : <span className='text-blue-700'>{item.twentyDays}</span></span>
+                        <span className='mt-2 '>Litre discount : <span className='text-blue-700'>{item.thirtyDays}</span></span>
                         <span className='mt-2 '>Delivery Charges : <span className='text-blue-700'>{item.deliveryCharges}</span></span>
 
 
@@ -423,7 +423,7 @@ const AddDiscount = () => {
                                   htmlFor="twentyDays"
                                   className="block text-sm/6 font-medium text-gray-900"
                                 >
-                                  Twenty Days
+                                  half litre Discount
                                 </label>
                                 <div className="mt-2">
                                   <input
@@ -432,7 +432,7 @@ const AddDiscount = () => {
                                     id="twentyDays"
                                     value={updateData.twentyDays}
                                     onChange={updateHandleFunc}
-                                    placeholder='Enter twenty days discount'
+                                    placeholder='Enter half litre 30 days discount'
 
                                     className="block w-full number-input rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1  outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                   />
@@ -450,7 +450,7 @@ const AddDiscount = () => {
                                   htmlFor="thirtyDays"
                                   className="block text-sm/6 font-medium text-gray-900"
                                 >
-                                  Thirty Days
+                                 litre Discount
                                 </label>
                                 <div className="mt-2">
                                   <input
@@ -459,7 +459,7 @@ const AddDiscount = () => {
                                     id="thirtyDays"
                                     value={updateData.thirtyDays}
                                     onChange={updateHandleFunc}
-                                    placeholder='Enter thirty days discount'
+                                    placeholder='Enter litre 30 days discount'
 
                                     className="block w-full number-input rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1  outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                   />
