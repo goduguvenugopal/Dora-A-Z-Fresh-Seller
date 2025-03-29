@@ -279,10 +279,10 @@ const UploadCarousel = () => {
 
                 </div>
               </div>
-              {productData.carouselImage && (
+              {productData?.carouselImage && (
 
                 <div className='flex flex-wrap gap-2 mt-4'>
-                  {productData.carouselImage.map((item, index) => (
+                  {productData?.carouselImage?.map((item, index) => (
                     <div key={index} className='w-[6.5rem] lg:w-[9.5rem]  relative h-fit rounded'>
                       <img src={item} className='rounded' alt="item-image" />
                       <MdClose onClick={() => removeImageFunction(item)} className='rounded-full cursor-pointer h-6 w-6 p-1 absolute top-1 hover:bg-indigo-700 right-1 bg-black text-white' />
@@ -310,7 +310,7 @@ const UploadCarousel = () => {
                   </label>
                   <div className="mt-2">
                     <textarea
-                      value={productData.offerTitle}
+                      value={productData?.offerTitle}
                       onChange={formHandleFunc}
 
                       name="offerTitle"
@@ -353,16 +353,16 @@ const UploadCarousel = () => {
               <CustomLoading customHeight="h-[50vh]" />
               : <>
 
-                {carouselData.length <= 0 ?
+                {carouselData?.length <= 0 ?
                   <div className="flex justify-center items-center h-[50vh]">
                     <h5 className='font-semibold'>No offer images and tilte</h5>
                   </div>
                   :
                   <div>
-                    {carouselData.map((item) => (
+                    {carouselData?.map((item) => (
                       <div className='font-semibold flex flex-col border  items-start gap-3 mb-3 p-3 rounded' key={item._id}>
                         <div className='flex flex-wrap w-full gap-3' >
-                          {item.carouselImage.map((itemImg, index) => (
+                          {item?.carouselImage?.map((itemImg, index) => (
                             <div key={index}>
                               <img className='w-[6rem] rounded lg:w-[9rem]' src={itemImg} alt="carousel-image" />
                             </div>
@@ -405,7 +405,7 @@ const UploadCarousel = () => {
                               </label>
                               <div className="mt-2">
                                 <textarea
-                                  value={updateData.offerTitle}
+                                  value={updateData?.offerTitle}
                                   onChange={updateHandleFunc}
 
                                   name="offerTitle"
