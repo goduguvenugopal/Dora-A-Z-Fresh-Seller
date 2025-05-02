@@ -6,7 +6,7 @@ import { Loading, SmallLoading } from '../assets/Loading'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { dataContext } from '../App'
-import { milkBasedItems, vegetables, meats, vegFoodBasedNames, nonVegFoods, indianCoolDrinks, indianPickles, indianSpices, indianSweets, Maincategories, bakeryItems, snacksList } from './itemSubCategory';
+import { milkBasedItems, vegetables, meats, vegFoodBasedNames, nonVegFoods, indianCoolDrinks, indianPickles, indianSpices, indianSweets, Maincategories, bakeryItems, snacksList, indianGroceryItems } from './itemSubCategory';
 
 
 
@@ -71,6 +71,8 @@ const ProductUpdateForm = () => {
     }
     else if (productData.itemCategory === "snacks") {
       setItemSubCategory(snacksList)
+    }else if(productData.itemCategory === "grocery"){
+      setItemSubCategory(indianGroceryItems)
     }
   }, [productData.itemCategory])
 

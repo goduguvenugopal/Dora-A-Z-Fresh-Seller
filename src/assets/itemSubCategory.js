@@ -3,6 +3,7 @@ export const Maincategories = [
   "milk",
   "vegetables",
   "food",
+  "grocery",
   "meat",
   "beverages",
   "non-veg",
@@ -318,4 +319,112 @@ export const nonVegFoods = [
   "Clam Chowder",
   "BBQ Chicken Wings",
   "Meatball Spaghetti",
+];
+
+// grocery items
+export const indianGroceryItems = [
+  "others",
+  // Grains & Flours
+  "Basmati Rice",
+  "Sona Masoori Rice",
+  "Idli Rice",
+  "Wheat Flour (Atta)",
+  "Maida",
+  "Ragi Flour",
+  "Besan (Gram Flour)",
+  "Sooji (Rava)",
+  "Poha",
+  "Sabudana",
+  "Dalia",
+
+  // Pulses & Lentils (Dals)
+  "Toor Dal",
+  "Moong Dal",
+  "Chana Dal",
+  "Masoor Dal",
+  "Urad Dal",
+  "Rajma",
+  "Kabuli Chana (White Chickpeas)",
+  "Kala Chana (Black Chickpeas)",
+  "Lobia (Black-eyed Peas)",
+
+  // Spices (Whole & Ground)
+  "Haldi (Turmeric Powder)",
+  "Lal Mirch (Red Chili Powder)",
+  "Dhaniya Powder (Coriander Powder)",
+  "Jeera (Cumin Seeds)",
+  "Sarson (Mustard Seeds)",
+  "Hing (Asafoetida)",
+  "Ajwain (Carom Seeds)",
+  "Methi Seeds (Fenugreek)",
+  "Kala Jeera (Black Cumin)",
+  "Saunf (Fennel Seeds)",
+  "Tej Patta (Bay Leaves)",
+  "Dalchini (Cinnamon)",
+  "Laung (Cloves)",
+  "Elaichi (Cardamom)",
+  "Kali Mirch (Black Pepper)",
+  "Amchur (Dry Mango Powder)",
+  "Garam Masala",
+  "Chaat Masala",
+  "Sambar Powder",
+  "Rasam Powder",
+
+  // Oils & Ghee
+  "Groundnut Oil",
+  "Mustard Oil",
+  "Sunflower Oil",
+  "Coconut Oil",
+  "Sesame Oil",
+  "Desi Ghee",
+  "Vanaspati",
+
+  // Condiments & Sauces
+  "Tamarind",
+  "Imli Paste",
+  "Coconut Chutney Powder",
+  "Pickles (Aam, Lemon, Mixed)",
+  "Tomato Ketchup",
+  "Soy Sauce",
+  "Green Chutney",
+  "Vinegar",
+
+  // Ready to Cook / Instant
+  "Maggi Noodles",
+  "Instant Upma Mix",
+  "Instant Idli Mix",
+  "Instant Dosa Mix",
+  "Ready-to-eat Paneer Butter Masala",
+  "Ready-to-eat Dal Makhani",
+
+  // Dry Ingredients
+  "Dry Coconut",
+  "Cashew Nuts",
+  "Almonds",
+  "Raisins",
+  "Pistachios",
+  "Peanuts",
+  "Fox Nuts (Makhana)",
+
+  // Other Essentials
+  "Rock Salt (Sendha Namak)",
+  "Black Salt (Kala Namak)",
+  "Jaggery (Gur)",
+  "Sugar",
+  "Salt",
+  "Tea Masala",
+  "Cooking Soda",
+  "Citric Acid (Nimbu Sat)",
+
+  // Household
+  "Detergent",
+  "Dishwashing Liquid",
+  "Toilet Cleaner",
+  "Phenyl",
+  "Toothpaste",
+  "Toothbrush",
+  "Hand Wash",
+  "Shampoo",
+  "Bath Soap",
+  "Sanitary Pads",
 ];

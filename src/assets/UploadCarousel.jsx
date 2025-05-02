@@ -187,10 +187,7 @@ const UploadCarousel = () => {
       console.error(error);
       toast.error("Please try again not updated ")
       setSpin(false)
-
     }
-
-
   }
 
   // delete carousel  
