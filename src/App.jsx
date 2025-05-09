@@ -89,8 +89,6 @@ function App() {
     }
   }, [user, reload])
 
-
-
   return (
     <>
       <dataContext.Provider value={{
