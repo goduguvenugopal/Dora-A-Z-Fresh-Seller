@@ -18,7 +18,6 @@ import PageNotFound from './assets/PageNotFound.jsx';
 import OrderOverView from './assets/OrderOverView.jsx';
 import AddDiscount from './assets/AddDiscount.jsx';
 
-
 export const dataContext = createContext()
 
 function App() {
