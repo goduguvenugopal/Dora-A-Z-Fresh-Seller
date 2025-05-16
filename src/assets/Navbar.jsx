@@ -50,8 +50,13 @@ const Navbar = () => {
 
   // removing token function
   const removeToken = () => {
-    localStorage.removeItem("token");
-    setToken("");
+    const isOkay = confirm(
+      "you will be logged out permanently, are you sure ?"
+    );
+    if (isOkay) {
+      localStorage.removeItem("token");
+      setToken("");
+    }
   };
 
   return (
@@ -84,12 +89,17 @@ const Navbar = () => {
           {toggle && (
             <div
               onClick={(e) => e.stopPropagation()}
-              className="absolute right-0 top-[2rem] w-[6rem] bg-gray-600 rounded p-1"
+              className="absolute right-0 top-[2rem] w-[7rem] bg-gray-600 rounded p-1"
             >
               <h5 className="text-white hover:bg-blue-500 cursor-pointer p-1 rounded capitalize">
                 {user.fullName.substring(0, 9)}
               </h5>
-              <Link className="text-white hover:bg-blue-500 cursor-pointer p-1 rounded capitalize" to="/visitors">Visitors</Link>
+              <Link
+                className="text-white flex hover:bg-blue-500 cursor-pointer p-1 rounded capitalize"
+                to="/visitors"
+              >
+                Visitors
+              </Link>
               <h5
                 className="text-white hover:bg-blue-500 rounded  cursor-pointer p-1"
                 onClick={removeToken}
