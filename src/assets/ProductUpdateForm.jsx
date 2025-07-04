@@ -163,7 +163,7 @@ const ProductUpdateForm = () => {
     }));
   };
 
-  // form submit function
+  //product details form submit function
   const formSubmitFunc = async (event) => {
     event.preventDefault();
     try {
