@@ -154,6 +154,12 @@ const ProductOverView = () => {
                     ₹{product.itemCost}
                   </span>
                 </h5>
+                  <h5 className="text-blue-800 mt-2 text-[1.1rem]">
+                  Item offer message :{" "}
+                  <span className="text-black font-semibold te">
+                    {product?.offerMessage}
+                  </span>
+                </h5>
 
                 <hr className="border  border-gray-200 mb-2 mt-1" />
 
