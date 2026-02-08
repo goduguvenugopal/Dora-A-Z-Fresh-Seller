@@ -5,8 +5,8 @@ self.addEventListener("push", (event) => {
 
   self.registration.showNotification(data.title, {
     body: data.body,
-    icon: "/logo.png",
-    badge: "/badge.png",
+    icon: "/dora-logo.jpeg",
+    badge: "/dora-logo.jpeg",
     data: { url: data.url },
   });
 });
