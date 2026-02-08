@@ -5,6 +5,7 @@ import { FaEdit, FaSearch } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { Loading, SmallLoading } from "./Loading";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import NotificationToggle from "../components/NotificationToggle";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -45,7 +46,7 @@ const Admin = () => {
   const inputHandle = (event) => {
     const userMail = event.target.value.toLowerCase();
     const result = users.filter((item) =>
-      item.email.toLowerCase().includes(userMail)
+      item.email.toLowerCase().includes(userMail),
     ); // Fixed method and case handling
     setFilter(result);
   };
@@ -53,7 +54,7 @@ const Admin = () => {
   // fetch admins
   const findAdmins = (adminText) => {
     const admin = users.filter((item) =>
-      item.role.toLowerCase().includes(adminText.toLowerCase())
+      item.role.toLowerCase().includes(adminText.toLowerCase()),
     );
     setFilter(admin);
   };
@@ -73,7 +74,7 @@ const Admin = () => {
             headers: {
               token: token,
             },
-          }
+          },
         );
         if (res) {
           setReq(true);
@@ -96,11 +97,11 @@ const Admin = () => {
     const message = confirm("User will be deleted permanently, are you sure ?");
     if (message) {
       try {
-        const res = await axios.delete(`${api}/user/delete-user/${userID}` ,{
-            headers: {
-              token: token,
-            },
-          });
+        const res = await axios.delete(`${api}/user/delete-user/${userID}`, {
+          headers: {
+            token: token,
+          },
+        });
         if (res) {
           const remainUsers = filter.filter((item) => item._id !== userID);
           setFilter(remainUsers);
@@ -118,6 +119,10 @@ const Admin = () => {
       <ToastContainer position="top-center" theme="dark" />
 
       <div className="mt-[6.1rem] p-3 lg:p-5">
+        <div className="py-5">
+          <NotificationToggle />
+        </div>
+
         <h5 className="text-center text-2xl font-semibold mb-3 ">
           All Users : {users.length}
         </h5>
